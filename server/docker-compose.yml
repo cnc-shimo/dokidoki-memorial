@@ -1,0 +1,24 @@
+version: '2.0'
+services:
+  cakephp-web:
+    container_name: cakephp-web
+    image: shimomo/cakephp
+    links:
+      - postgres-db
+    ports:
+      - '80:80'
+  postgres-db:
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: troublemaker
+      POSTGRES_PASSWORD: troublemaker
+    image: postgres
+    ports:
+      - '5432:5432'
+    volumes_from:
+      - postgres-data
+  postgres-data:
+    container_name: postgres-data
+    image: busybox
+    volumes:
+      - /var/lib/postgresql/data
