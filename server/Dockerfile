@@ -1,3 +1,3 @@
 FROM shimomo/cakephp
 
-ADD cakephp /var/www/html/
+ADD cakephp /var/www/html/cakephp/
