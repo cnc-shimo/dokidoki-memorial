@@ -1,12 +1,18 @@
 version: '2.0'
 services:
   cakephp-web:
-    container_name: cakephp-web
+    environment:
+      VIRTUAL_HOST: 192.168.99.100
     image: shimomo0502/troublemaker
     links:
       - postgres-db
+  nginx-proxy:
+    container_name: nginx-proxy
+    image: jwilder/nginx-proxy
     ports:
       - '80:80'
+    volumes:
+      - '/var/run/docker.sock:/tmp/docker.sock'
   postgres-db:
     container_name: postgres-db
     environment:
