@@ -1,11 +1,11 @@
 # Troublemaker RESTful API
 
-## 起動
+## Run
 ```
 docker-compose up -d
 ```
 
-## 更新
+## Scale
 ```
-docker cp ./cakephp cakephp-web:/var/www/html
+docker-compose scale cakephp-web=5
 ```
