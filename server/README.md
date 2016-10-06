@@ -1,4 +1,4 @@
-# Troublemaker RESTful API
+# RESTful API
 
 ## Run
 ```
