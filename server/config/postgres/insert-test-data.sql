@@ -47,3 +47,19 @@ INSERT INTO users (
   '2016/01/01 00:00:00',
   '2016/01/01 00:00:00'
 );
+
+INSERT INTO couples (
+  man_id,
+  woman_id,
+  temporary_token,
+  access_token,
+  created_at,
+  updated_at
+) VALUES (
+  1,
+  3,
+  '123456',
+  'qwertyqwertyqwerty',
+  '2016/01/01 00:00:00',
+  '2016/01/01 00:00:00'
+);
