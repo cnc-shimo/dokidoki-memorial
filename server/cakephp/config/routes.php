@@ -27,7 +27,11 @@ use Cake\Routing\Route\DashedRoute;
 Router::defaultRouteClass(DashedRoute::class);
 Router::scope('/api/:versions', function (RouteBuilder $routes) {
     $routes->extensions(['json']);
-    $routes->resources('Devices');
+    $routes->resources('Couples');
+    $routes->resources('Users');
+    $routes->resources('Users', function ($routes) {
+        $routes->resources('Frustrations', ['prefix' => 'users']);
+    });
 });
 
 Plugin::routes();
