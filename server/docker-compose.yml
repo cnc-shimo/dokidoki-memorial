@@ -16,8 +16,8 @@ services:
   postgres-db:
     container_name: postgres-db
     environment:
-      POSTGRES_USER: troublemaker
-      POSTGRES_PASSWORD: troublemaker
+      POSTGRES_USER: dokidoki-memorial
+      POSTGRES_PASSWORD: dokidoki-memorial
     image: postgres
     ports:
       - '5432:5432'
