@@ -229,9 +229,9 @@ return [
              * the following line and set the port accordingly
              */
             //'port' => 'non_standard_port_number',
-            'username' => 'troublemaker',
-            'password' => 'troublemaker',
-            'database' => 'troublemaker',
+            'username' => 'dokidoki-memorial',
+            'password' => 'dokidoki-memorial',
+            'database' => 'dokidoki-memorial',
             'encoding' => 'utf8',
             'timezone' => 'Asia/Tokyo',
             'flags' => [],
