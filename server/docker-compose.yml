@@ -3,7 +3,7 @@ services:
   cakephp-web:
     environment:
       VIRTUAL_HOST: 192.168.99.100
-    image: shimomo0502/troublemaker
+    image: shimomo0502/dokidoki-memorial
     links:
       - postgres-db
   nginx-proxy:
