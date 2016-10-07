@@ -32,17 +32,53 @@ class CouplesController extends AppController
      */
     public function index()
     {
-        // Model
-        // $table = TableRegistry::get('Users');
+        $couples = $this->Couples->find()->select([
+            'id'          => 'Couples.id',
+            'man_id'      => 'Couples.man_id',
+            'woman_id'    => 'Couples.woman_id',
+            'anniversary' => 'Couples.anniversary',
+            'created_at'  => 'Couples.created_at',
+            'updated_at'  => 'Couples.updated_at',
+        ])->all();
 
-        // QueryBuilder
-        $users = $this->Couples->find()->all();
-
-        // Response
         $this->set([
-            'users' => $users,
+            'couples' => $couples,
             '_serialize' => [
-                'users',
+                'couples',
+            ],
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function view(string $id)
+    {
+        $couple = $this->Couples->find()->where([
+            'Couples.id' => $id,
+        ])->select([
+            'id'          => 'Couples.id',
+            'man_id'      => 'Couples.man_id',
+            'woman_id'    => 'Couples.woman_id',
+            'anniversary' => 'Couples.anniversary',
+            'created_at'  => 'Couples.created_at',
+            'updated_at'  => 'Couples.updated_at',
+        ])->first();
+
+        $this->set([
+            'id'          => $couple['id'],
+            'man_id'      => $couple['man_id'],
+            'woman_id'    => $couple['woman_id'],
+            'anniversary' => $couple['anniversary'],
+            'created_at'  => $couple['created_at'],
+            'updated_at'  => $couple['updated_at'],
+            '_serialize' => [
+                'id',
+                'man_id',
+                'woman_id',
+                'anniversary',
+                'created_at',
+                'updated_at',
             ],
         ]);
     }
