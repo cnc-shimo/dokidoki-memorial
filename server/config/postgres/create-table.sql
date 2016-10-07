@@ -17,6 +17,7 @@ CREATE TABLE couples (
   id              SERIAL PRIMARY KEY,                   /* 識別番号　 */
   man_id          INTEGER UNIQUE REFERENCES users (id), /* 利用者番号 */
   woman_id        INTEGER UNIQUE REFERENCES users (id), /* 利用者番号 */
+  anniversary     TIMESTAMP,                            /* 記念日　　 */
   temporary_token TEXT UNIQUE NOT NULL,                 /* 一時認証　 */
   access_token    TEXT UNIQUE NOT NULL,                 /* 永続認証　 */
   created_at      TIMESTAMP NOT NULL,                   /* 作成日時　 */
