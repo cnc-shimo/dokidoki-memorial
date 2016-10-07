@@ -29,6 +29,9 @@ Router::scope('/api/:versions', function (RouteBuilder $routes) {
     $routes->extensions(['json']);
     $routes->resources('Couples');
     $routes->resources('Users');
+    $routes->resources('Users', function ($routes) {
+        $routes->resources('Frustrations', ['prefix' => 'users']);
+    });
 });
 
 Plugin::routes();
