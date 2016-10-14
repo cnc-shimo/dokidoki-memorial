@@ -19,7 +19,7 @@ class UsersTable extends Table
         $users = $this->find()->join([
             'c' => [
                 'table' => 'couples',
-                'type' => 'INNER',
+                'type' => 'LEFT OUTER',
                 'conditions' => [
                     'OR' => [
                         'c.man_id' => new IdentifierExpression('Users.id'),
