@@ -62,8 +62,8 @@ class UsersController extends AppController
             'couple_id'          => $user[0]['couple_id'],
             'couple_man_id'      => $user[0]['couple_man_id'],
             'couple_woman_id'    => $user[0]['couple_woman_id'],
-            'couple_created_at'  => $user[0]['couple_created_at'],
             'couple_anniversary' => $user[0]['anniversary'],
+            'couple_created_at'  => $user[0]['couple_created_at'],
             'couple_updated_at'  => $user[0]['couple_updated_at'],
             '_serialize' => [
                 'id',
