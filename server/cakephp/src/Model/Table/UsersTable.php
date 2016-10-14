@@ -11,11 +11,12 @@ use Cake\ORM\Table;
 class UsersTable extends Table
 {
     /**
-     * @return \Cake\ORM\ResultSet
+     * @param  array $conditions
+     * @return array
      */
-    public function getUsers()
+    public function getUsers(array $conditions)
     {
-        return $this->find()->join([
+        $users = $this->find()->join([
             'c' => [
                 'table' => 'couples',
                 'type' => 'INNER',
@@ -44,6 +45,12 @@ class UsersTable extends Table
             'couple_anniversary' => 'c.anniversary',
             'couple_created_at'  => 'c.created_at',
             'couple_updated_at'  => 'c.updated_at',
-        ])->all();
+        ]);
+
+        foreach ($conditions as $key => $value) {
+            $users->where([$key => $value]);
+        }
+
+        return json_decode(json_encode($users->all()), true);
     }
 }
