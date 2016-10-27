@@ -15,8 +15,6 @@ import android.widget.Button;
 
 public class MainFragment extends Fragment {
 
-    private MainFragment self = this;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
