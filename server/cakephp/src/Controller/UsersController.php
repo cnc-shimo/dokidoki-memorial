@@ -32,37 +32,7 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $users = $this->Users->find()->join([
-            'c' => [
-                'table' => 'couples',
-                'type' => 'INNER',
-                'conditions' => [
-                    'OR' => [
-                        'c.man_id' => new \Cake\Database\Expression\IdentifierExpression('Users.id'),
-                        'c.woman_id' => new \Cake\Database\Expression\IdentifierExpression('Users.id'),
-                    ],
-                ],
-            ],
-        ])->select([
-            'id'                 => 'Users.id',
-            'name'               => 'Users.name',
-            'sex'                => 'Users.sex',
-            'birthday'           => 'Users.birthday',
-            'constellation'      => 'Users.constellation',
-            'blood'              => 'Users.blood',
-            'birthplace'         => 'Users.birthplace',
-            'residence'          => 'Users.residence',
-            'hobby'              => 'Users.hobby',
-            'created_at'         => 'Users.created_at',
-            'updated_at'         => 'Users.updated_at',
-            'couple_id'          => 'c.id',
-            'couple_man_id'      => 'c.man_id',
-            'couple_woman_id'    => 'c.woman_id',
-            'couple_anniversary' => 'c.anniversary',
-            'couple_created_at'  => 'c.created_at',
-            'couple_updated_at'  => 'c.updated_at',
-        ])->all();
-
+        $users = $this->Users->getUsers([]);
         $this->set([
             'users' => $users,
             '_serialize' => [
@@ -76,57 +46,25 @@ class UsersController extends AppController
      */
     public function view(string $id)
     {
-        $user = $this->Users->find()->where([
-            'Users.id' => $id,
-        ])->join([
-            'c' => [
-                'table' => 'couples',
-                'type' => 'INNER',
-                'conditions' => [
-                    'OR' => [
-                        'c.man_id' => new \Cake\Database\Expression\IdentifierExpression('Users.id'),
-                        'c.woman_id' => new \Cake\Database\Expression\IdentifierExpression('Users.id'),
-                    ],
-                ],
-            ],
-        ])->select([
-            'id'                 => 'Users.id',
-            'name'               => 'Users.name',
-            'sex'                => 'Users.sex',
-            'birthday'           => 'Users.birthday',
-            'constellation'      => 'Users.constellation',
-            'blood'              => 'Users.blood',
-            'birthplace'         => 'Users.birthplace',
-            'residence'          => 'Users.residence',
-            'hobby'              => 'Users.hobby',
-            'created_at'         => 'Users.created_at',
-            'updated_at'         => 'Users.updated_at',
-            'couple_id'          => 'c.id',
-            'couple_man_id'      => 'c.man_id',
-            'couple_woman_id'    => 'c.woman_id',
-            'couple_anniversary' => 'c.anniversary',
-            'couple_created_at'  => 'c.created_at',
-            'couple_updated_at'  => 'c.updated_at',
-        ])->first();
-
+        $user = $this->Users->getUsers(['Users.id' => $id]);
         $this->set([
-            'id'                 => $user['id'],
-            'name'               => $user['name'],
-            'sex'                => $user['sex'],
-            'birthday'           => $user['birthday'],
-            'constellation'      => $user['constellation'],
-            'blood'              => $user['blood'],
-            'birthplace'         => $user['birthplace'],
-            'residence'          => $user['residence'],
-            'hobby'              => $user['hobby'],
-            'created_at'         => $user['created_at'],
-            'updated_at'         => $user['updated_at'],
-            'couple_id'          => $user['couple_id'],
-            'couple_man_id'      => $user['couple_man_id'],
-            'couple_woman_id'    => $user['couple_woman_id'],
-            'couple_anniversary' => $user['anniversary'],
-            'couple_created_at'  => $user['couple_created_at'],
-            'couple_updated_at'  => $user['couple_updated_at'],
+            'id'                 => $user[0]['id'],
+            'name'               => $user[0]['name'],
+            'sex'                => $user[0]['sex'],
+            'birthday'           => $user[0]['birthday'],
+            'constellation'      => $user[0]['constellation'],
+            'blood'              => $user[0]['blood'],
+            'birthplace'         => $user[0]['birthplace'],
+            'residence'          => $user[0]['residence'],
+            'hobby'              => $user[0]['hobby'],
+            'created_at'         => $user[0]['created_at'],
+            'updated_at'         => $user[0]['updated_at'],
+            'couple_id'          => $user[0]['couple_id'],
+            'couple_man_id'      => $user[0]['couple_man_id'],
+            'couple_woman_id'    => $user[0]['couple_woman_id'],
+            'couple_anniversary' => $user[0]['couple_anniversary'],
+            'couple_created_at'  => $user[0]['couple_created_at'],
+            'couple_updated_at'  => $user[0]['couple_updated_at'],
             '_serialize' => [
                 'id',
                 'name',
