@@ -33,19 +33,23 @@ class FrustrationsController extends AppController
      */
     public function index()
     {
-        $frustrations = $this->Frustrations->find()->select([
-            'id'            => 'Frustrations.id',
-            'user_id'       => 'Frustrations.user_id',
-            'couple_id'     => 'Frustrations.couple_id',
-            'title'         => 'Frustrations.title',
-            'message'       => 'Frustrations.message',
-            'value'         => 'Frustrations.value',
-            'is_read'       => 'Frustrations.is_read',
-            'is_eliminated' => 'Frustrations.is_eliminated',
-            'created_at'    => 'Frustrations.created_at',
-            'updated_at'    => 'Frustrations.updated_at',
-        ])->all();
+        $frustrations = $this->Frustrations->getFrustrations();
+        $this->set([
+            'frustrations' => $frustrations,
+            '_serialize' => [
+                'frustrations',
+            ],
+        ]);
+    }
 
+    /**
+     * @return void
+     */
+    public function add()
+    {
+        $data = $this->request->input('json_decode', true)['frustrations'];
+        $result = $this->Frustrations->postFrustrations($data);
+        $frustrations = $this->Frustrations->getFrustrations();
         $this->set([
             'frustrations' => $frustrations,
             '_serialize' => [
