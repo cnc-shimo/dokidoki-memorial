@@ -32,7 +32,7 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $users = $this->Users->getUsers([]);
+        $users = $this->Users->getUsers();
         $this->set([
             'users' => $users,
             '_serialize' => [
