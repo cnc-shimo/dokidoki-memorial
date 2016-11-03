@@ -32,15 +32,7 @@ class CouplesController extends AppController
      */
     public function index()
     {
-        $couples = $this->Couples->find()->select([
-            'id'          => 'Couples.id',
-            'man_id'      => 'Couples.man_id',
-            'woman_id'    => 'Couples.woman_id',
-            'anniversary' => 'Couples.anniversary',
-            'created_at'  => 'Couples.created_at',
-            'updated_at'  => 'Couples.updated_at',
-        ])->all();
-
+        $couples = $this->Couples->getCouples();
         $this->set([
             'couples' => $couples,
             '_serialize' => [
@@ -54,17 +46,7 @@ class CouplesController extends AppController
      */
     public function view(string $id)
     {
-        $couple = $this->Couples->find()->where([
-            'Couples.id' => $id,
-        ])->select([
-            'id'          => 'Couples.id',
-            'man_id'      => 'Couples.man_id',
-            'woman_id'    => 'Couples.woman_id',
-            'anniversary' => 'Couples.anniversary',
-            'created_at'  => 'Couples.created_at',
-            'updated_at'  => 'Couples.updated_at',
-        ])->first();
-
+        $couples = $this->Couples->getCouples(['Couples.id' => $id]);
         $this->set([
             'id'          => $couple['id'],
             'man_id'      => $couple['man_id'],
