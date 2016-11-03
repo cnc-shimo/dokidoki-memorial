@@ -45,6 +45,38 @@ class FrustrationsController extends AppController
     /**
      * @return void
      */
+    public function view(string $id)
+    {
+        $frustrations = $this->Frustrations->getFrustrations(['Frustrations.id' => $id]);
+        $this->set([
+            'id'            => $frustrations[0]['id'],
+            'user_id'       => $frustrations[0]['user_id'],
+            'couple_id'     => $frustrations[0]['couple_id'],
+            'title'         => $frustrations[0]['title'],
+            'message'       => $frustrations[0]['message'],
+            'value'         => $frustrations[0]['value'],
+            'is_read'       => $frustrations[0]['is_read'],
+            'is_eliminated' => $frustrations[0]['is_eliminated'],
+            'created_at'    => $frustrations[0]['created_at'],
+            'updated_at'    => $frustrations[0]['updated_at'],
+            '_serialize' => [
+                'id',
+                'user_id',
+                'couple_id',
+                'title',
+                'message',
+                'value',
+                'is_read',
+                'is_eliminated',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+    }
+
+    /**
+     * @return void
+     */
     public function add()
     {
         $data = $this->request->input('json_decode', true)['frustrations'];
