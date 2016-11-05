@@ -28,6 +28,11 @@ class FrustrationsTable extends Table
             'created_at'    => 'Frustrations.created_at',
             'updated_at'    => 'Frustrations.updated_at',
         ]);
+
+        foreach ($conditions as $key => $value) {
+            $frustrations->where([$key => $value]);
+        }
+
         return json_decode(json_encode($frustrations->all()), true);
     }
 
@@ -48,6 +53,7 @@ class FrustrationsTable extends Table
             'created_at',
             'updated_at',
         ]);
+
         foreach ($data as $d) {
             $d['user_id'] = 1;
             $d['couple_id'] = 1;
@@ -57,6 +63,7 @@ class FrustrationsTable extends Table
             $d['updated_at'] = '2000/01/01 00:00:00';
             $query->values($d);
         }
+
         $query->execute();
         return true;
     }
