@@ -43,6 +43,7 @@ class FrustrationsController extends AppController
     }
 
     /**
+     * @param  string $id
      * @return void
      */
     public function view(string $id)
