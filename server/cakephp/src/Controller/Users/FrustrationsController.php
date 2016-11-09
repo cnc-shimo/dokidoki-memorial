@@ -33,7 +33,8 @@ class FrustrationsController extends AppController
      */
     public function index()
     {
-        $frustrations = $this->Frustrations->getFrustrations();
+        $userId = $this->request->param('user_id');
+        $frustrations = $this->Frustrations->getFrustrations(['Frustrations.user_id' => $userId]);
         $this->set([
             'frustrations' => $frustrations,
             '_serialize' => [
