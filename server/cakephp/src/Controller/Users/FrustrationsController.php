@@ -81,8 +81,9 @@ class FrustrationsController extends AppController
      */
     public function add()
     {
+        $userId = (integer)$this->request->param('user_id');
         $data = $this->request->input('json_decode', true)['frustrations'];
-        $result = $this->Frustrations->postFrustrations($data);
+        $result = $this->Frustrations->postFrustrations($userId, $data);
         $frustrations = $this->Frustrations->getFrustrations();
         $this->set([
             'frustrations' => $frustrations,

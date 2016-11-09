@@ -37,10 +37,11 @@ class FrustrationsTable extends Table
     }
 
     /**
-     * @param  array $conditions
+     * @param  int   $userId
+     * @param  array $data
      * @return boolean
      */
-    public function postFrustrations(array $data = [])
+    public function postFrustrations(int $userId, array $data)
     {
         $query = $this->query()->insert([
             'user_id',
@@ -55,7 +56,7 @@ class FrustrationsTable extends Table
         ]);
 
         foreach ($data as $d) {
-            $d['user_id'] = 1;
+            $d['user_id'] = $userId;
             $d['couple_id'] = 1;
             $d['is_read'] = false;
             $d['is_eliminated'] = false;
