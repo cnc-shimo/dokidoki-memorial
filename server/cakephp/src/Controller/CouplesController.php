@@ -46,14 +46,14 @@ class CouplesController extends AppController
      */
     public function view(string $id)
     {
-        $couples = $this->Couples->getCouples(['Couples.id' => $id]);
+        $couple = $this->Couples->getCouples(['Couples.id' => $id]);
         $this->set([
-            'id'          => $couple['id'],
-            'man_id'      => $couple['man_id'],
-            'woman_id'    => $couple['woman_id'],
-            'anniversary' => $couple['anniversary'],
-            'created_at'  => $couple['created_at'],
-            'updated_at'  => $couple['updated_at'],
+            'id'          => $couple[0]['id'],
+            'man_id'      => $couple[0]['man_id'],
+            'woman_id'    => $couple[0]['woman_id'],
+            'anniversary' => $couple[0]['anniversary'],
+            'created_at'  => $couple[0]['created_at'],
+            'updated_at'  => $couple[0]['updated_at'],
             '_serialize' => [
                 'id',
                 'man_id',
