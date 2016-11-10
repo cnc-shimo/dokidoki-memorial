@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.conami.dokidoki_memorial.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/menu_memorial"
+        android:icon="@drawable/ic_book"
+        android:title="Memorial"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/menu_frustration_message"
+        android:icon="@drawable/ic_mail"
+        android:title="FrustrationMessage"
+        app:showAsAction="always" />
+</menu>
