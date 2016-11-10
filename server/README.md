@@ -1,7 +1,5 @@
 # RESTful API
 
----
-
 ## [GET] /api/v1/users
 ### Request
 ```
@@ -73,8 +71,6 @@ ToDo
 }
 ```
 
----
-
 ## [GET] /api/v1/users/:id
 ### Request
 ```
@@ -104,8 +100,6 @@ ToDo
 }
 ```
 
----
-
 ## [GET] /api/v1/users/:user_id/frustrations
 ### Request
 ```
@@ -132,8 +126,6 @@ ToDo
 }
 ```
 
----
-
 ## [GET] /api/v1/users/:user_id/frustrations/:id
 ### Request
 ```
@@ -155,8 +147,6 @@ ToDo
     "value": 70
 }
 ```
-
----
 
 ## [GET] /api/v1/couples
 ### Request
@@ -180,8 +170,6 @@ ToDo
 }
 ```
 
----
-
 ## [GET] /api/v1/couples/:id
 ### Request
 ```
@@ -199,8 +187,6 @@ ToDo
     "woman_id": 3
 }
 ```
-
----
 
 ## [POST] /api/v1/users/:user_id/frustrations
 ### Request
