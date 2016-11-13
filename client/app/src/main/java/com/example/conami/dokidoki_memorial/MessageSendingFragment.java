@@ -1,5 +1,7 @@
 package com.example.conami.dokidoki_memorial;
 
+import android.app.AlertDialog;
+import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,15 +14,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.widget.TextView;
 
 /**
  * Created by matsushita on 2016/11/08.
  */
 
-public class MessageSendingFragment extends Fragment{
+public class MessageSendingFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -62,6 +62,7 @@ public class MessageSendingFragment extends Fragment{
         });
 
 
+        /* call when send-button tapped  */
         Button buttonSendMessage = (Button)rootView.findViewById(R.id.button_send);
         buttonSendMessage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -69,24 +70,41 @@ public class MessageSendingFragment extends Fragment{
                 /* close software keyboard */
                 closeSoftwareKeyboard(view);
 
-                /* get text from edit text box */
-                EditText editTextTitle = (EditText)rootView.findViewById(R.id.edit_text_sending_title);
-                EditText editTextMessage = (EditText)rootView.findViewById(R.id.edit_text_sending_message);
-                String title   = editTextTitle.getText().toString();
-                String message = editTextMessage.getText().toString();
-
-                /* send http request */
-                String json =
-                    "{\"frustrations\": [ {\"title\": \""+title+"\",\"message\": \""+message+"\",\"value\": 0}]}";
-                Log.d("json",json);
-                HttpRequest httpRequest = new HttpRequest();
-                httpRequest.post("http://210.140.69.130/api/v1/users/1/frustrations.json",json);
+                /* HotToCommunicateDialogFragment の表示 */
+                Bundle bundle = new Bundle();
+                HowToCommunicateDialogFragment howToCommunicateFragment = new HowToCommunicateDialogFragment();
+                howToCommunicateFragment.setArguments(bundle);
+                howToCommunicateFragment.setTargetFragment(MessageSendingFragment.this, 0); /* 自分を呼び出し元のフラグメントとしてセット */
+                howToCommunicateFragment.show(getFragmentManager(),"how_to_dialog");
             }
 
         });
 
 
         return rootView;
+    }
+
+    public void onOkClick(){
+        Log.d("push","OK");
+
+        /* get text from edit text box */
+        EditText editTextTitle = (EditText)getActivity().findViewById(R.id.edit_text_sending_title);
+        EditText editTextMessage = (EditText)getActivity().findViewById(R.id.edit_text_sending_message);
+        String title   = editTextTitle.getText().toString();
+        String message = editTextMessage.getText().toString();
+
+        /* send http request */
+        String json =
+                "{\"frustrations\": [ {\"title\": \""+title+"\",\"message\": \""+message+"\",\"value\": 0}]}";
+        Log.d("json",json);
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.post("http://210.140.69.130/api/v1/users/1/frustrations.json",json); /* debug: user id 1 で固定 */
+        /* clear ExitEext box */
+        editTextTitle.getEditableText().clear();
+        editTextMessage.getEditableText().clear();
+
+        /* debug:SimpleDialogFragmentとかのクラスを作る */
+        new AlertDialog.Builder(getActivity()).setTitle("").setMessage("送信しました").show();
     }
 
     void closeSoftwareKeyboard(View view){
