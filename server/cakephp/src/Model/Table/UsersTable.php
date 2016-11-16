@@ -14,7 +14,7 @@ class UsersTable extends Table
      * @param  array $conditions
      * @return array
      */
-    public function getUsers(array $conditions)
+    public function getUsers(array $conditions = [])
     {
         $users = $this->find()->join([
             'c' => [

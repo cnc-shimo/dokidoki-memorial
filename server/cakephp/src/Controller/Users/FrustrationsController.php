@@ -33,19 +33,58 @@ class FrustrationsController extends AppController
      */
     public function index()
     {
-        $frustrations = $this->Frustrations->find()->select([
-            'id'            => 'Frustrations.id',
-            'user_id'       => 'Frustrations.user_id',
-            'couple_id'     => 'Frustrations.couple_id',
-            'title'         => 'Frustrations.title',
-            'message'       => 'Frustrations.message',
-            'value'         => 'Frustrations.value',
-            'is_read'       => 'Frustrations.is_read',
-            'is_eliminated' => 'Frustrations.is_eliminated',
-            'created_at'    => 'Frustrations.created_at',
-            'updated_at'    => 'Frustrations.updated_at',
-        ])->all();
+        $userId = $this->request->param('user_id');
+        $frustrations = $this->Frustrations->getFrustrations(['Frustrations.user_id' => $userId]);
+        $this->set([
+            'frustrations' => $frustrations,
+            '_serialize' => [
+                'frustrations',
+            ],
+        ]);
+    }
 
+    /**
+     * @param  string $id
+     * @return void
+     */
+    public function view(string $id)
+    {
+        $frustrations = $this->Frustrations->getFrustrations(['Frustrations.id' => $id]);
+        $this->set([
+            'id'            => $frustrations[0]['id'],
+            'user_id'       => $frustrations[0]['user_id'],
+            'couple_id'     => $frustrations[0]['couple_id'],
+            'title'         => $frustrations[0]['title'],
+            'message'       => $frustrations[0]['message'],
+            'value'         => $frustrations[0]['value'],
+            'is_read'       => $frustrations[0]['is_read'],
+            'is_eliminated' => $frustrations[0]['is_eliminated'],
+            'created_at'    => $frustrations[0]['created_at'],
+            'updated_at'    => $frustrations[0]['updated_at'],
+            '_serialize' => [
+                'id',
+                'user_id',
+                'couple_id',
+                'title',
+                'message',
+                'value',
+                'is_read',
+                'is_eliminated',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function add()
+    {
+        $userId = (integer)$this->request->param('user_id');
+        $data = $this->request->input('json_decode', true)['frustrations'];
+        $result = $this->Frustrations->postFrustrations($userId, $data);
+        $frustrations = $this->Frustrations->getFrustrations();
         $this->set([
             'frustrations' => $frustrations,
             '_serialize' => [

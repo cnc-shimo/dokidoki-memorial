@@ -32,15 +32,7 @@ class CouplesController extends AppController
      */
     public function index()
     {
-        $couples = $this->Couples->find()->select([
-            'id'          => 'Couples.id',
-            'man_id'      => 'Couples.man_id',
-            'woman_id'    => 'Couples.woman_id',
-            'anniversary' => 'Couples.anniversary',
-            'created_at'  => 'Couples.created_at',
-            'updated_at'  => 'Couples.updated_at',
-        ])->all();
-
+        $couples = $this->Couples->getCouples();
         $this->set([
             'couples' => $couples,
             '_serialize' => [
@@ -54,24 +46,14 @@ class CouplesController extends AppController
      */
     public function view(string $id)
     {
-        $couple = $this->Couples->find()->where([
-            'Couples.id' => $id,
-        ])->select([
-            'id'          => 'Couples.id',
-            'man_id'      => 'Couples.man_id',
-            'woman_id'    => 'Couples.woman_id',
-            'anniversary' => 'Couples.anniversary',
-            'created_at'  => 'Couples.created_at',
-            'updated_at'  => 'Couples.updated_at',
-        ])->first();
-
+        $couple = $this->Couples->getCouples(['Couples.id' => $id]);
         $this->set([
-            'id'          => $couple['id'],
-            'man_id'      => $couple['man_id'],
-            'woman_id'    => $couple['woman_id'],
-            'anniversary' => $couple['anniversary'],
-            'created_at'  => $couple['created_at'],
-            'updated_at'  => $couple['updated_at'],
+            'id'          => $couple[0]['id'],
+            'man_id'      => $couple[0]['man_id'],
+            'woman_id'    => $couple[0]['woman_id'],
+            'anniversary' => $couple[0]['anniversary'],
+            'created_at'  => $couple[0]['created_at'],
+            'updated_at'  => $couple[0]['updated_at'],
             '_serialize' => [
                 'id',
                 'man_id',
