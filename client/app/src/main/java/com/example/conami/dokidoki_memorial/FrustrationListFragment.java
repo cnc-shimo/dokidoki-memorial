@@ -54,6 +54,7 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
     View rootView;
     FrustrationMessageAdapter adapter;
     ArrayList<FrustrationMessage> messages;
+    User user = new User();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -108,7 +109,9 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
             adapter.notifyDataSetChanged();
             }
         });
-        httpRequest.get("http://210.140.69.130/api/v1/users/1/frustrations.json");
+
+        String url = "http://210.140.69.130/api/v1/users/"+user.getId()+"/frustrations.json";
+        httpRequest.get(url);
         //httpRequest.execute("GET","http://www.google.co.jp");
         //textView.setText("aaaa");
 
