@@ -98,7 +98,7 @@ public class MessageSendingFragment extends Fragment {
                 "{\"frustrations\": [ {\"title\": \""+title+"\",\"message\": \""+message+"\",\"value\": 0}]}";
         Log.d("json",json);
         HttpRequest httpRequest = new HttpRequest();
-        httpRequest.post("http://210.140.69.130/api/v1/users/1/frustrations.json",json); /* debug: user id 1 で固定 */
+        httpRequest.post("http://210.140.69.130/api/v1/users/"+User.getId()+"/frustrations.json",json);
         /* clear ExitEext box */
         editTextTitle.getEditableText().clear();
         editTextMessage.getEditableText().clear();
