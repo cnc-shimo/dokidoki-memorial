@@ -108,7 +108,9 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
             adapter.notifyDataSetChanged();
             }
         });
-        httpRequest.get("http://210.140.69.130/api/v1/users/1/frustrations.json");
+
+        String url = "http://210.140.69.130/api/v1/users/"+User.getIdOfPartnar()+"/frustrations.json";
+        httpRequest.get(url);
         //httpRequest.execute("GET","http://www.google.co.jp");
         //textView.setText("aaaa");
 
