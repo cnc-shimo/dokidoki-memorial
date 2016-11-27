@@ -109,7 +109,7 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
             }
         });
 
-        String url = "http://210.140.69.130/api/v1/users/"+User.getId()+"/frustrations.json";
+        String url = "http://210.140.69.130/api/v1/users/"+User.getIdOfPartnar()+"/frustrations.json";
         httpRequest.get(url);
         //httpRequest.execute("GET","http://www.google.co.jp");
         //textView.setText("aaaa");
