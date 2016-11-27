@@ -8,6 +8,7 @@ public final class User {
     private static int id = 1;
     private static String name = "user1";
     private static int coupleId = 1;
+    private static int idOfPartnar = 3;
 
     private User(){
     }
@@ -24,10 +25,10 @@ public final class User {
         this.coupleId = coupleId;
     }
 
-
-    public static int getCoupleId() {
-        return coupleId;
+    private void setIdOfPartnar(int idOfPartnar){
+        this.idOfPartnar = idOfPartnar;
     }
+
 
     public static int getId() {
         return id;
@@ -35,5 +36,13 @@ public final class User {
 
     public static String getName() {
         return name;
+    }
+
+    public static int getCoupleId() {
+        return coupleId;
+    }
+
+    public static int getIdOfPartnar() {
+        return idOfPartnar;
     }
 }
