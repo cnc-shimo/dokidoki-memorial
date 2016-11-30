@@ -35,9 +35,12 @@ class FrustrationsController extends AppController
     {
         $userId = $this->request->param('user_id');
         $frustrations = $this->Frustrations->getFrustrations(['Frustrations.user_id' => $userId]);
+        $total = count($frustrations);
         $this->set([
+            'total' => $total,
             'frustrations' => $frustrations,
             '_serialize' => [
+                'total',
                 'frustrations',
             ],
         ]);
@@ -84,7 +87,7 @@ class FrustrationsController extends AppController
         $userId = (integer)$this->request->param('user_id');
         $data = $this->request->input('json_decode', true)['frustrations'];
         $result = $this->Frustrations->postFrustrations($userId, $data);
-        $frustrations = $this->Frustrations->getFrustrations();
+        $frustrations = $this->Frustrations->getFrustrations(['Frustrations.user_id' => $userId]);
         $this->set([
             'frustrations' => $frustrations,
             '_serialize' => [

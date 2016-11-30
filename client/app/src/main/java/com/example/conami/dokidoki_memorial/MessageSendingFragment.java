@@ -67,15 +67,29 @@ public class MessageSendingFragment extends Fragment {
         buttonSendMessage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                /* close software keyboard */
-                closeSoftwareKeyboard(view);
+                Log.d("call","#onClick");
+                EditText editTextTitle = (EditText)getActivity().findViewById(R.id.edit_text_sending_title);
+                EditText editTextMessage = (EditText)getActivity().findViewById(R.id.edit_text_sending_message);
+                String title   = editTextTitle.getText().toString();
+                String message = editTextMessage.getText().toString();
+                Log.d("title",title);
+                if(title.equals("")){
+                    new AlertDialog.Builder(getActivity()).setTitle("").setMessage("タイトルを入力してください").show();
+                    return;
+                }else if(message.equals("")){
+                    new AlertDialog.Builder(getActivity()).setTitle("").setMessage("メッセージを入力してください").show();
+                    return;
+                }else {
+                    /* close software keyboard */
+                    closeSoftwareKeyboard(view);
 
-                /* HotToCommunicateDialogFragment の表示 */
-                Bundle bundle = new Bundle();
-                HowToCommunicateDialogFragment howToCommunicateFragment = new HowToCommunicateDialogFragment();
-                howToCommunicateFragment.setArguments(bundle);
-                howToCommunicateFragment.setTargetFragment(MessageSendingFragment.this, 0); /* 自分を呼び出し元のフラグメントとしてセット */
-                howToCommunicateFragment.show(getFragmentManager(),"how_to_dialog");
+                    /* HotToCommunicateDialogFragment の表示 */
+                    Bundle bundle = new Bundle();
+                    HowToCommunicateDialogFragment howToCommunicateFragment = new HowToCommunicateDialogFragment();
+                    howToCommunicateFragment.setArguments(bundle);
+                    howToCommunicateFragment.setTargetFragment(MessageSendingFragment.this, 0); /* 自分を呼び出し元のフラグメントとしてセット */
+                    howToCommunicateFragment.show(getFragmentManager(), "how_to_dialog");
+                }
             }
 
         });
@@ -84,8 +98,9 @@ public class MessageSendingFragment extends Fragment {
         return rootView;
     }
 
+    /* call when ok-button (in "howto communicate dialog") tapped */
     public void onOkClick(){
-        Log.d("push","OK");
+        Log.d("call","MessageSendingFragment#onClick");
 
         /* get text from edit text box */
         EditText editTextTitle = (EditText)getActivity().findViewById(R.id.edit_text_sending_title);
@@ -98,7 +113,7 @@ public class MessageSendingFragment extends Fragment {
                 "{\"frustrations\": [ {\"title\": \""+title+"\",\"message\": \""+message+"\",\"value\": 0}]}";
         Log.d("json",json);
         HttpRequest httpRequest = new HttpRequest();
-        httpRequest.post("http://210.140.69.130/api/v1/users/1/frustrations.json",json); /* debug: user id 1 で固定 */
+        httpRequest.post("http://210.140.69.130/api/v1/users/"+User.getId()+"/frustrations.json",json);
         /* clear ExitEext box */
         editTextTitle.getEditableText().clear();
         editTextMessage.getEditableText().clear();

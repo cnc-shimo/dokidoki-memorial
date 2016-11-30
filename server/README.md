@@ -122,7 +122,8 @@ ToDo
             "user_id": 1,
             "value": 70
         }
-    ]
+    ],
+    "total": 1
 }
 ```
 
