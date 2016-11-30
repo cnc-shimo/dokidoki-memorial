@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("タイトル");
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        toolbar.setTitle("タイトル");
 
         /*
         toolbar.setNavigationIcon(R.drawable.frustration);
@@ -55,27 +55,27 @@ public class MainActivity extends AppCompatActivity {
         });
         */
 
-        toolbar.inflateMenu(R.menu.menu_main);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_home:
-                        Log.d("Frustration","Click!");
-                        mViewPager.setCurrentItem(0);
-                        return true;
-                    case R.id.menu_memorial:
-                        Log.d("Frustration","Click!");
-                        mViewPager.setCurrentItem(1);
-                        return true;
-                    case R.id.menu_frustration_message:
-                        Log.d("Frustration","Click!");
-                        mViewPager.setCurrentItem(2);
-                        return true;
-                }
-                return true;
-            }
-        });
+//        toolbar.inflateMenu(R.menu.menu_main);
+//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.menu_home:
+//                        Log.d("Frustration","Click!");
+//                        mViewPager.setCurrentItem(0);
+//                        return true;
+//                    case R.id.menu_memorial:
+//                        Log.d("Frustration","Click!");
+//                        mViewPager.setCurrentItem(1);
+//                        return true;
+//                    case R.id.menu_frustration_message:
+//                        Log.d("Frustration","Click!");
+//                        mViewPager.setCurrentItem(2);
+//                        return true;
+//                }
+//                return true;
+//            }
+//        });
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
