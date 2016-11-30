@@ -1,11 +1,9 @@
 package com.example.conami.dokidoki_memorial;
 
 import android.app.AlertDialog;
-import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,28 +12,24 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 /**
  * Created by matsushita on 2016/11/08.
+ * Updated by shimo      on 2016/11/30.
  */
-
 public class MessageSendingFragment extends Fragment {
     /**
-     * The fragment argument representing the section number for this
-     * fragment.
+     * The fragment argument representing the section number for this fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     /**
      * default constructor
      */
-    public MessageSendingFragment() {
-    }
+    public MessageSendingFragment() {}
 
     /**
-     * Returns a new instance of this fragment for the given section
-     * number.
+     * Returns a new instance of this fragment for the given section number.
      */
     public static MessageSendingFragment newInstance(int sectionNumber) {
         MessageSendingFragment fragment = new MessageSendingFragment();
@@ -46,83 +40,76 @@ public class MessageSendingFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_messages_sending, container, false);
 
         /* call when layout touched */
-        LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.layout_sending_message);
-        layout.setOnTouchListener(new View.OnTouchListener(){
+        LinearLayout layout = (LinearLayout)rootView.findViewById(R.id.layout_sending_message);
+        layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent event){
+            public boolean onTouch(View view, MotionEvent event) {
                 closeSoftwareKeyboard(view);
                 return false;
             }
-
         });
 
-
-        /* call when send-button tapped  */
+        /* call when send-button tapped */
         Button buttonSendMessage = (Button)rootView.findViewById(R.id.button_send);
-        buttonSendMessage.setOnClickListener(new View.OnClickListener(){
+        buttonSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                Log.d("call","#onClick");
-                EditText editTextTitle = (EditText)getActivity().findViewById(R.id.edit_text_sending_title);
+            public void onClick(View view) {
+                EditText editTextTitle   = (EditText)getActivity().findViewById(R.id.edit_text_sending_title);
                 EditText editTextMessage = (EditText)getActivity().findViewById(R.id.edit_text_sending_message);
                 String title   = editTextTitle.getText().toString();
                 String message = editTextMessage.getText().toString();
-                Log.d("title",title);
-                if(title.equals("")){
+
+                if (title.equals("")) {
                     new AlertDialog.Builder(getActivity()).setTitle("").setMessage("タイトルを入力してください").show();
                     return;
-                }else if(message.equals("")){
+                }
+
+                if(message.equals("")) {
                     new AlertDialog.Builder(getActivity()).setTitle("").setMessage("メッセージを入力してください").show();
                     return;
-                }else {
-                    /* close software keyboard */
-                    closeSoftwareKeyboard(view);
-
-                    /* HotToCommunicateDialogFragment の表示 */
-                    Bundle bundle = new Bundle();
-                    HowToCommunicateDialogFragment howToCommunicateFragment = new HowToCommunicateDialogFragment();
-                    howToCommunicateFragment.setArguments(bundle);
-                    howToCommunicateFragment.setTargetFragment(MessageSendingFragment.this, 0); /* 自分を呼び出し元のフラグメントとしてセット */
-                    howToCommunicateFragment.show(getFragmentManager(), "how_to_dialog");
                 }
+
+                /* close software keyboard */
+                closeSoftwareKeyboard(view);
+
+                /* show HotToCommunicateDialogFragment */
+                Bundle bundle = new Bundle();
+                HowToCommunicateDialogFragment howToCommunicateFragment = new HowToCommunicateDialogFragment();
+                howToCommunicateFragment.setArguments(bundle);
+                howToCommunicateFragment.setTargetFragment(MessageSendingFragment.this, 0);
+                howToCommunicateFragment.show(getFragmentManager(), "how_to_dialog");
             }
-
         });
-
-
         return rootView;
     }
 
-    /* call when ok-button (in "howto communicate dialog") tapped */
-    public void onOkClick(){
-        Log.d("call","MessageSendingFragment#onClick");
-
+    /* call when ok-button tapped */
+    public void onOkClick() {
         /* get text from edit text box */
-        EditText editTextTitle = (EditText)getActivity().findViewById(R.id.edit_text_sending_title);
+        EditText editTextTitle   = (EditText)getActivity().findViewById(R.id.edit_text_sending_title);
         EditText editTextMessage = (EditText)getActivity().findViewById(R.id.edit_text_sending_message);
         String title   = editTextTitle.getText().toString();
         String message = editTextMessage.getText().toString();
 
         /* send http request */
-        String json =
-                "{\"frustrations\": [ {\"title\": \""+title+"\",\"message\": \""+message+"\",\"value\": 0}]}";
-        Log.d("json",json);
+        String json = "{\"frustrations\": [{\"title\": \""+title+"\",\"message\": \"" + message + "\",\"value\": 0}]}";
         HttpRequest httpRequest = new HttpRequest();
-        httpRequest.post("http://210.140.69.130/api/v1/users/"+User.getId()+"/frustrations.json",json);
-        /* clear ExitEext box */
+        httpRequest.post("http://210.140.69.130/api/v1/users/" + User.getId() + "/frustrations.json", json);
+
+        /* clear edit text box */
         editTextTitle.getEditableText().clear();
         editTextMessage.getEditableText().clear();
 
-        /* debug:SimpleDialogFragmentとかのクラスを作る */
+        /* show dialog */
         new AlertDialog.Builder(getActivity()).setTitle("").setMessage("送信しました").show();
     }
 
-    void closeSoftwareKeyboard(View view){
+    /* close software keyboard */
+    void closeSoftwareKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
