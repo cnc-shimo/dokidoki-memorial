@@ -1,10 +1,10 @@
 package com.example.conami.dokidoki_memorial;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.view.inputmethod.InputMethodManager;
+
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,42 +43,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("タイトル");
-
-        /*
-        toolbar.setNavigationIcon(R.drawable.frustration);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // ナビゲーションアイコンクリック時の処理
-                Log.d("toolbar_frustration","Click!!");
-            }
-        });
-        */
-
-        toolbar.inflateMenu(R.menu.menu_main);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_home:
-                        Log.d("Frustration","Click!");
-                        mViewPager.setCurrentItem(0);
-                        return true;
-                    case R.id.menu_memorial:
-                        Log.d("Frustration","Click!");
-                        mViewPager.setCurrentItem(1);
-                        return true;
-                    case R.id.menu_frustration_message:
-                        Log.d("Frustration","Click!");
-                        mViewPager.setCurrentItem(2);
-                        return true;
-                }
-                return true;
-            }
-        });
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -111,6 +78,28 @@ public class MainActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(@IdRes int tabId) {
+                Log.d("tabId: " + tabId, "was clicked");
+                Log.d("tab_home is", "" + R.id.tab_home);
+                switch(tabId) {
+                    case R.id.tab_home:
+                        mViewPager.setCurrentItem(0);
+                        break;
+                    case R.id.tab_frustration:
+                        mViewPager.setCurrentItem(1);
+                        break;
+                    case R.id.tab_settings:
+                        mViewPager.setCurrentItem(2);
+                        break;
+                    default:
+                        mViewPager.setCurrentItem(0);
+                }
             }
         });
 
