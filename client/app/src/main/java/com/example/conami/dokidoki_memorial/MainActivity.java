@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -40,42 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        toolbar.setTitle("タイトル");
 
-        /*
-        toolbar.setNavigationIcon(R.drawable.frustration);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // ナビゲーションアイコンクリック時の処理
-                Log.d("toolbar_frustration","Click!!");
-            }
-        });
-        */
-
-//        toolbar.inflateMenu(R.menu.menu_main);
-//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.menu_home:
-//                        Log.d("Frustration","Click!");
-//                        mViewPager.setCurrentItem(0);
-//                        return true;
-//                    case R.id.menu_memorial:
-//                        Log.d("Frustration","Click!");
-//                        mViewPager.setCurrentItem(1);
-//                        return true;
-//                    case R.id.menu_frustration_message:
-//                        Log.d("Frustration","Click!");
-//                        mViewPager.setCurrentItem(2);
-//                        return true;
-//                }
-//                return true;
-//            }
-//        });
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
