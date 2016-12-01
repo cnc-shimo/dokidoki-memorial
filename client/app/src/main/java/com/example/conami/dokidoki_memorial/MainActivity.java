@@ -1,6 +1,7 @@
 package com.example.conami.dokidoki_memorial;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.view.inputmethod.InputMethodManager;
+
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -75,6 +78,28 @@ public class MainActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(@IdRes int tabId) {
+                Log.d("tabId: " + tabId, "was clicked");
+                Log.d("tab_home is", "" + R.id.tab_home);
+                switch(tabId) {
+                    case R.id.tab_home:
+                        mViewPager.setCurrentItem(0);
+                        break;
+                    case R.id.tab_frustration:
+                        mViewPager.setCurrentItem(1);
+                        break;
+                    case R.id.tab_settings:
+                        mViewPager.setCurrentItem(2);
+                        break;
+                    default:
+                        mViewPager.setCurrentItem(0);
+                }
             }
         });
 

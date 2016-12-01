@@ -2,22 +2,22 @@
 <tabs xmlns:android="http://schemas.android.com/apk/res/android">
     <tab
         id="@+id/tab_home"
-        icon="@drawable/ic_airplane"
-        title="airplane"
+        icon="@drawable/ic_home"
+        title="Home"
         activColor="@color/colorPrimary"
         />
 
     <tab
         id="@+id/tab_frustration"
-        icon="@drawable/ic_car"
-        title="airplane"
+        icon="@drawable/ic_book"
+        title="Memorial"
         activColor="@color/colorPrimary"
         />
 
     <tab
         id="@+id/tab_settings"
-        icon="@drawable/ic_cat"
-        title="airplane"
+        icon="@drawable/ic_mail"
+        title="Message"
         activColor="@color/colorPrimary"
         />
 </tabs>
