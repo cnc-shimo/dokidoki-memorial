@@ -98,7 +98,7 @@ public class MessageSendingFragment extends Fragment {
         /* send http request */
         String json = "{\"frustrations\": [{\"title\": \""+title+"\",\"message\": \"" + message + "\",\"value\": 0}]}";
         HttpRequest httpRequest = new HttpRequest();
-        httpRequest.post("http://210.140.69.130/api/v1/users/" + User.getId() + "/frustrations.json", json);
+        httpRequest.post("http://210.140.69.130/api/v1/users/" + UserModel.getId() + "/frustrations.json", json);
 
         /* clear edit text box */
         editTextTitle.getEditableText().clear();
