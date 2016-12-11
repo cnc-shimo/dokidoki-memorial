@@ -1,4 +1,4 @@
-package com.example.conami.dokidoki_memorial;
+package com.example.conami.dokimemo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.conami.dokidoki_memorial", appContext.getPackageName());
+        assertEquals("com.example.conami.dokimemo", appContext.getPackageName());
     }
 }
