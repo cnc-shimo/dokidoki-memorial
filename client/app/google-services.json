@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "842113088191",
+    "firebase_url": "https://dokidoki-memorial-ab71e.firebaseio.com",
+    "project_id": "dokidoki-memorial-ab71e",
+    "storage_bucket": "dokidoki-memorial-ab71e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842113088191:android:ecaf61ec6fd1a1cc",
+        "android_client_info": {
+          "package_name": "com.example.conami.dokidoki_memorial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842113088191-6bi219iqis7nm59onlc49qcdcfo41nqs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrYibFYHftwUcz9sRrTJjgMut87b50ghs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
