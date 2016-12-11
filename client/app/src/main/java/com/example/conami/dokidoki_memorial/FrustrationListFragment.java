@@ -2,14 +2,12 @@ package com.example.conami.dokidoki_memorial;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,8 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by matsushita on 2016/11/08.
@@ -86,7 +82,7 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
 
     public void updateFrustrationList(){
         HttpRequest httpRequest = new HttpRequest();
-        httpRequest.setFunc(new Func() {
+        httpRequest.setFunc(new FuncInterface() {
             @Override
             public void func(TextView view, String json) { //引数のtextViewはめんどいけど書いてください．jsonはGETで取得したjsonの文字列．
             messages.clear();
@@ -109,7 +105,7 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
             }
         });
 
-        String url = "http://210.140.69.130/api/v1/users/"+User.getId()+"/frustrations.json";
+        String url = "http://210.140.69.130/api/v1/users/"+ UserModel.getId()+"/frustrations.json";
         httpRequest.get(url);
         //httpRequest.execute("GET","http://www.google.co.jp");
         //textView.setText("aaaa");

@@ -14,19 +14,14 @@ import java.io.PrintStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.util.Log;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
 public class HttpRequest extends AsyncTask<String, Void, String> {
-    private static Func func = null;
+    private static FuncInterface func = null;
     private static TextView textView = null;
 
     HttpRequest(){
@@ -38,7 +33,7 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
         this.textView = textView;
     }
 
-    public void setFunc(Func func){
+    public void setFunc(FuncInterface func){
         this.func = func;
     }
 
