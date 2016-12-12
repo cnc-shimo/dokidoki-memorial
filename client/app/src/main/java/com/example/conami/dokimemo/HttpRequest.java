@@ -1,4 +1,4 @@
-package com.example.conami.dokidoki_memorial;
+package com.example.conami.dokimemo;
 
 /**
  * Created by matsushita on 2016/11/01.

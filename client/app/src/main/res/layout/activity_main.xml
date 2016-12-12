@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/white"
-    tools:context="com.example.conami.dokidoki_memorial.MainActivity">
+    tools:context=".MainActivity">
 
 
     <android.support.v4.view.ViewPager

@@ -1,4 +1,4 @@
-package com.example.conami.dokidoki_memorial;
+package com.example.conami.dokimemo;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.example.conami.dokidoki_memorial;
+package com.example.conami.dokimemo;
 
 import android.content.Context;
 import android.support.annotation.IdRes;
@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseMessaging.getInstance().subscribeToTopic("sample");
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager)findViewById(R.id.container);
