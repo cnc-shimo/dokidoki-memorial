@@ -14,9 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
-
 import java.util.ArrayList;
-
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class HowToCommunicateDialogFragment extends DialogFragment {
