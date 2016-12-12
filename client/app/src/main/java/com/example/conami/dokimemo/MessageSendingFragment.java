@@ -13,24 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-/**
- * Created by matsushita on 2016/11/08.
- * Updated by shimo      on 2016/11/30.
- */
 public class MessageSendingFragment extends Fragment {
-    /**
-     * The fragment argument representing the section number for this fragment.
-     */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    /**
-     * default constructor
-     */
     public MessageSendingFragment() {}
 
-    /**
-     * Returns a new instance of this fragment for the given section number.
-     */
     public static MessageSendingFragment newInstance(int sectionNumber) {
         MessageSendingFragment fragment = new MessageSendingFragment();
         Bundle args = new Bundle();
@@ -84,6 +71,7 @@ public class MessageSendingFragment extends Fragment {
                 howToCommunicateFragment.show(getFragmentManager(), "how_to_dialog");
             }
         });
+
         return rootView;
     }
 
@@ -96,7 +84,7 @@ public class MessageSendingFragment extends Fragment {
         String message = editTextMessage.getText().toString();
 
         /* send http request */
-        String json = "{\"frustrations\": [{\"title\": \""+title+"\",\"message\": \"" + message + "\",\"value\": 0}]}";
+        String json = "{\"frustrations\": [{\"title\": \"" + title + "\",\"message\": \"" + message + "\",\"value\": 0}]}";
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.post("http://210.140.69.130/api/v1/users/" + UserModel.getId() + "/frustrations.json", json);
 
