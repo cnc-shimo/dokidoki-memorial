@@ -19,18 +19,18 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_bomb_icon"
-            android:id="@+id/image_bomb"
-            android:scaleType="fitCenter" />
-
-        <ImageView
             android:layout_height="wrap_content"
             android:layout_gravity="top|right"
             app:srcCompat="@drawable/ic_atom"
             android:id="@+id/image_bom_scale"
             android:layout_width="wrap_content"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_bomb_icon"
+            android:id="@+id/image_bomb"
             android:scaleType="fitCenter" />
 
         <TextView
