@@ -16,6 +16,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import static android.R.attr.animation;
+import static android.R.attr.value;
+import static android.R.attr.width;
+
 public class HomeFragment extends Fragment{
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -80,21 +88,22 @@ public class HomeFragment extends Fragment{
                 //なんかここは何回も呼び出されているっぽい.どうにかしたい.
                 //scale画像の設定.
                 // onCreate内でやろうとすると一旦rootViewを秒が描画してからでないとviewのサイズが取れない.
-                int width = rootView.getWidth();
-                int height = rootView.getHeight();
                 scale = (ImageView)rootView.findViewById(R.id.image_bom_scale);
                 scaleMarginLayoutParams = (ViewGroup.MarginLayoutParams)scale.getLayoutParams();
-                scaleMarginLayoutParams.width  = (int)(0.1 * rootView.getWidth());
-                scaleMarginLayoutParams.height = (int)(0.1 * rootView.getWidth());
-                scaleMarginLayoutParams.rightMargin = (int)(0.1 * rootView.getWidth());
+                scaleMarginLayoutParams.width  = (int)(0.7 * rootView.getWidth());
+                scaleMarginLayoutParams.height = (int)(0.7 * rootView.getWidth());
+                scaleMarginLayoutParams.rightMargin = (int)(0.5 * rootView.getWidth());
                 scale.setLayoutParams(scaleMarginLayoutParams);
-
                 measureMarginLayoutParams = (ViewGroup.MarginLayoutParams)measure.getLayoutParams();
-                measureMarginLayoutParams.width  = (int)(0.1* rootView.getWidth());
-                measureMarginLayoutParams.height = (int)(0.1* rootView.getWidth());
+                measureMarginLayoutParams.width  = (int)(0.5* rootView.getWidth());
+                measureMarginLayoutParams.height = (int)(0.5* rootView.getWidth());
 
+                //Log.d("getWidth", ""+Integer.toString(rootView.getWidth()));
+                //Log.d("getHeight", ""+Integer.toString(rootView.getHeight()));
                 //最初のボムの更新
-                //updateBom(rootView.getWidth(),rootView.getHeight());
+                updateBom(rootView.getWidth(), rootView.getHeight());
+                //リスナーを削除する
+                rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 
@@ -115,9 +124,34 @@ public class HomeFragment extends Fragment{
         bombLayoutParams = bomb.getLayoutParams();
         bombMarginLayoutParams = (ViewGroup.MarginLayoutParams)bombLayoutParams;
 
-        count+=1; // 後で消す.
+        //サーバーからvalueを取得
+        HttpRequest httpRequest = new HttpRequest();
+        httpRequest.setFunc(new FuncInterface() {
+            @Override
+            public void func(TextView textView, String json) {//jsonはGETで取得したjsonの文字列．
+                try {
+                    Log.d("json", json);
+                    JSONObject jsonObject = new JSONObject(json);
+                    count = jsonObject.getInt("total_value");
+
+                } catch (JSONException e) {
+                    Log.e("JSONExeption", e.toString());
+                }
+            }
+        });
+        //String url = "http://210.140.69.130/api/v1/users/"+UserModel.getId()+"/frustrations.json";
+        String url = "http://210.140.70.106/api/v1/users/"+UserModel.getId()+"/frustrations.json";
+        httpRequest.get(url);
+
+        //count+=1; // 後で消す.
         int sizeStep = 3;
-        int numberOfFrustrations = count; // 本来はサーバから取得
+        //count<0の時にバグるの対策
+        if(count<0) {
+            Log.d("count<0", "" + count);
+            count = 0;
+        }
+
+        int numberOfFrustrations = count;
         Log.d("count", "" + count);
         int bombSize  = (int)numberOfFrustrations % sizeStep; // for bom_image size
         int bombScale = (int)numberOfFrustrations / sizeStep;
@@ -132,7 +166,7 @@ public class HomeFragment extends Fragment{
             scale.setImageResource(scales[scales.length - 1]);
         }
 
-        measure.setText("10^" + bombScale);
+        measure.setText("やばい×" + bombScale);
     }
 
     AnimatorSet animatorSet;
