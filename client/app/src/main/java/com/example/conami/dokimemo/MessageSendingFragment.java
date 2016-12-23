@@ -1,4 +1,4 @@
-package com.example.conami.dokidoki_memorial;
+package com.example.conami.dokimemo;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,24 +13,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-/**
- * Created by matsushita on 2016/11/08.
- * Updated by shimo      on 2016/11/30.
- */
+import android.widget.TextView;
+import android.app.Activity;
+import android.widget.SeekBar;
+import android.widget.Toast;
+
+
 public class MessageSendingFragment extends Fragment {
-    /**
-     * The fragment argument representing the section number for this fragment.
-     */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    /**
-     * default constructor
-     */
     public MessageSendingFragment() {}
 
-    /**
-     * Returns a new instance of this fragment for the given section number.
-     */
     public static MessageSendingFragment newInstance(int sectionNumber) {
         MessageSendingFragment fragment = new MessageSendingFragment();
         Bundle args = new Bundle();
@@ -84,21 +77,28 @@ public class MessageSendingFragment extends Fragment {
                 howToCommunicateFragment.show(getFragmentManager(), "how_to_dialog");
             }
         });
+
         return rootView;
     }
 
     /* call when ok-button tapped */
     public void onOkClick() {
+
+        //SeekBer
+        SeekBar seekBar = (SeekBar) getActivity().findViewById(R.id.FrustrationBar);
+        int prg = seekBar.getProgress() - 5;
+        String value = String.valueOf(prg);
+
         /* get text from edit text box */
-        EditText editTextTitle   = (EditText)getActivity().findViewById(R.id.edit_text_sending_title);
-        EditText editTextMessage = (EditText)getActivity().findViewById(R.id.edit_text_sending_message);
-        String title   = editTextTitle.getText().toString();
+        EditText editTextTitle = (EditText) getActivity().findViewById(R.id.edit_text_sending_title);
+        EditText editTextMessage = (EditText) getActivity().findViewById(R.id.edit_text_sending_message);
+        String title = editTextTitle.getText().toString();
         String message = editTextMessage.getText().toString();
 
         /* send http request */
-        String json = "{\"frustrations\": [{\"title\": \""+title+"\",\"message\": \"" + message + "\",\"value\": 0}]}";
+        String json = "{\"frustrations\": [{\"title\": \"" + title + "\",\"message\": \"" + message + "\",\"value\": \"" + value + "\"}]}";
         HttpRequest httpRequest = new HttpRequest();
-        httpRequest.post("http://210.140.69.130/api/v1/users/" + User.getId() + "/frustrations.json", json);
+        httpRequest.post("http://210.140.70.106/api/v1/users/" + UserModel.getId() + "/frustrations.json", json);
 
         /* clear edit text box */
         editTextTitle.getEditableText().clear();

@@ -1,8 +1,4 @@
-package com.example.conami.dokidoki_memorial;
-
-/**
- * Created by matsushita on 2016/11/01.
- */
+package com.example.conami.dokimemo;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -14,31 +10,25 @@ import java.io.PrintStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.util.Log;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
 public class HttpRequest extends AsyncTask<String, Void, String> {
-    private static Func func = null;
+    private static FuncInterface func = null;
     private static TextView textView = null;
 
-    HttpRequest(){
+    HttpRequest() {
         this.setFunc(null);
         this.setTextView(null);
     }
 
-    public void setTextView(TextView textView){
+    public void setTextView(TextView textView) {
         this.textView = textView;
     }
 
-    public void setFunc(Func func){
+    public void setFunc(FuncInterface func) {
         this.func = func;
     }
 
@@ -46,53 +36,56 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
         String lines = "";
         String line = "";
-        while (line != null){
+        while (line != null) {
             line = bufferedReader.readLine();
             lines += line;
         }
         return lines;
     }
 
-    public void get(String url){
+    public void get(String url) {
         this.execute("GET",url);
     }
 
-    public void post(String url, String json){
+    public void post(String url, String json) {
         this.execute("POST",url, json);
     }
 
     @Override
-    protected String doInBackground(String... param) {  //method, url, json を引数に指定
-        if(param[0] == "GET"){
+    protected String doInBackground(String... param) { //method, url, jsonを引数に指定.
+        if (param[0] == "GET") {
             Log.d("LOG","ONGET");
             String url = param[1];
             return HttpRequest._get(url);
-        }else if(param[0] == "POST"){
+        } else if(param[0] == "POST") {
             String url  = param[1];
             String json = param[2];
-            if(HttpRequest._post(url,json)){
+
+            if (HttpRequest._post(url,json)) {
                 return "";
             }
+
             return "";
         }
+
         return "HttpResuest:ERROR!";
     }
 
-    // onPostExecute displays the results of the AsyncTask.
     @Override
     protected void onPostExecute(String result) {
-        if(this.func != null)
-            this.func.func(this.textView,result);
+        if (this.func != null) {
+            this.func.func(this.textView, result);
+        }
     }
 
-    private static String _get(String surl){
+    private static String _get(String surl) {
         InputStream is = null;
         HttpURLConnection con = null;
         try {
             URL url = new URL(surl);
             con = (HttpURLConnection) url.openConnection();
-            con.setReadTimeout(10000 /* milliseconds */);
-            con.setConnectTimeout(15000 /* milliseconds */);
+            con.setReadTimeout(10000);
+            con.setConnectTimeout(15000);
             con.setRequestMethod("GET");
             con.setDoInput(true);
 
@@ -119,21 +112,23 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
             if (is != null) {
                 try {
                     is.close();
-                } catch (IOException e){
-                }
+                } catch (IOException e){}
             }
-            if(con != null){
+
+            if (con != null) {
                 con.disconnect();
             }
         }
+
         return "ERROR!";
     }
 
-    // 動作未確認
+    // 動作未確認.
     private static boolean _post(String surl, String json) {
         OutputStream os = null;
         PrintStream ps = null;
         HttpURLConnection con = null;
+
         try {
             String buffer = "";
             URL url = new URL(surl);
@@ -163,6 +158,7 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
                 Log.d("HTTP REQ", jsonObject.getString("title"));
             }
             */
+
             return true;
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -175,16 +171,17 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
         } finally {
             if (ps != null) {
                 ps.close();
-            }else if(os != null) {
+            } else if(os != null) {
                 try {
                     os.close();
-                } catch (IOException e){
-                }
+                } catch (IOException e){}
             }
-            if(con != null){
+
+            if (con != null) {
                 con.disconnect();
             }
         }
+
         return false;
     }
 }

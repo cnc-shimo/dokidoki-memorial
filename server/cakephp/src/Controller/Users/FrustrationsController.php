@@ -36,11 +36,17 @@ class FrustrationsController extends AppController
         $userId = $this->request->param('user_id');
         $frustrations = $this->Frustrations->getFrustrations(['Frustrations.user_id' => $userId]);
         $total = count($frustrations);
+        $totalValue = 0;
+        foreach ($frustrations as $frustration) {
+            $totalValue += $frustration['value'];
+        }
         $this->set([
             'total' => $total,
+            'total_value' => $totalValue,
             'frustrations' => $frustrations,
             '_serialize' => [
                 'total',
+                'total_value',
                 'frustrations',
             ],
         ]);
