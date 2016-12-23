@@ -123,7 +123,8 @@ ToDo
             "value": 70
         }
     ],
-    "total": 1
+    "total": 1,
+    "total_value": 70
 }
 ```
 
