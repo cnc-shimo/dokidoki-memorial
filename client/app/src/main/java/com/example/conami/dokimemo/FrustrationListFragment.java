@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import org.json.JSONArray;
@@ -79,6 +80,8 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
                         frustrationMessage.setId(i);
                         frustrationMessage.setTitle(frustrations.getJSONObject(i).getString("title"));
                         frustrationMessage.setMessage(frustrations.getJSONObject(i).getString("message"));
+                        frustrationMessage.setDate(frustrations.getJSONObject(i).getString("created_at"));
+                        frustrationMessage.setValue(frustrations.getJSONObject(i).getInt("value"));
                         messages.add(0, frustrationMessage);
                     }
                 } catch(JSONException e) {
@@ -106,6 +109,8 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
         long id;
         String title;
         String message;
+        String date;
+        int value;
 
         public long getId() {
             return id;
@@ -130,6 +135,21 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
         public void setMessage(String message) {
             this.message = message;
         }
+
+        public String getDate() { return date; };
+
+        public void setDate(String date) {
+            this.date = date;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+
     }
 
     public class FrustrationMessageAdapter extends BaseAdapter {
@@ -167,6 +187,14 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
 
             ((TextView)convertView.findViewById(R.id.list_frustration_title)).setText(messages.get(position).getTitle());
             ((TextView)convertView.findViewById(R.id.list_frustration_message)).setText(messages.get(position).getMessage());
+            ((TextView)convertView.findViewById(R.id.list_frustration_date)).setText(messages.get(position).getDate());
+
+            Integer value = messages.get(position).getValue();
+            if(value > 0) {
+                ((ImageView)convertView.findViewById(R.id.list_frustration_icon)).setImageResource(R.drawable.ic_heart);
+            } else {
+                ((ImageView)convertView.findViewById(R.id.list_frustration_icon)).setImageResource(R.drawable.ic_bomb_icon);
+            }
 
             return convertView;
         }
