@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -35,12 +36,12 @@ public class HomeFragment extends Fragment{
     ViewGroup.MarginLayoutParams measureMarginLayoutParams;
     int maxAnimationNumber =10; // 後で消す.
     int[] scales = {
-            R.drawable.ic_mouse,
-            R.drawable.ic_cat,
-            R.drawable.ic_wolf,
-            R.drawable.ic_lion,
-            R.drawable.ic_elephant,
-            R.drawable.ic_whale,
+            R.mipmap.ic_mouse,
+            R.mipmap.ic_cat2,
+            R.mipmap.ic_wolf,
+            R.mipmap.ic_lion,
+            R.mipmap.ic_elephant,
+            R.mipmap.ic_whale,
 
     };
 
@@ -64,14 +65,8 @@ public class HomeFragment extends Fragment{
         final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         bomb = (ImageView)rootView.findViewById(R.id.image_bomb);
-        bomb.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Log.i("onClick","HomeFragment#onCreateView");
-                updateBom(rootView.getWidth(),rootView.getHeight());
-            }
-        });
 
-        measure = (TextView)rootView.findViewById(R.id.text_measure);
+        //measure = (TextView)rootView.findViewById(R.id.text_measure);
 
         ViewTreeObserver viewTreeObserver = rootView.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -81,18 +76,31 @@ public class HomeFragment extends Fragment{
                 //なんかここは何回も呼び出されているっぽい.どうにかしたい.
                 //scale画像の設定.
                 // onCreate内でやろうとすると一旦rootViewを秒が描画してからでないとviewのサイズが取れない.
-                scale = (ImageView)rootView.findViewById(R.id.image_bom_scale);
-                scaleMarginLayoutParams = (ViewGroup.MarginLayoutParams)scale.getLayoutParams();
-                scaleMarginLayoutParams.width  = (int)(0.7 * rootView.getWidth());
-                scaleMarginLayoutParams.height = (int)(0.7 * rootView.getWidth());
-                scaleMarginLayoutParams.rightMargin = (int)(0.5 * rootView.getWidth());
-                scale.setLayoutParams(scaleMarginLayoutParams);
-                measureMarginLayoutParams = (ViewGroup.MarginLayoutParams)measure.getLayoutParams();
-                measureMarginLayoutParams.width  = (int)(0.5* rootView.getWidth());
-                measureMarginLayoutParams.height = (int)(0.5* rootView.getWidth());
+                getTotalValue();
+                ArrayList<ImageView> scaleList = new ArrayList<ImageView>();
+                scaleList.add((ImageView)rootView.findViewById(R.id.scale1));
+                scaleList.add((ImageView)rootView.findViewById(R.id.scale2));
+                scaleList.add((ImageView)rootView.findViewById(R.id.scale3));
+                scaleList.add((ImageView)rootView.findViewById(R.id.scale4));
+                scaleList.add((ImageView)rootView.findViewById(R.id.scale5));
+                scaleList.add((ImageView)rootView.findViewById(R.id.scale6));
 
-                //Log.d("getWidth", ""+Integer.toString(rootView.getWidth()));
-                //Log.d("getHeight", ""+Integer.toString(rootView.getHeight()));
+                int scaleNum = count/3;
+                if(scaleNum>5) {
+                    scale = scaleList.get(5);
+                }else{
+                    scale = scaleList.get(scaleNum);
+                }
+
+                //scaleMarginLayoutParams = (ViewGroup.MarginLayoutParams)scale.getLayoutParams();
+                //scaleMarginLayoutParams.width  = (int)(0.7 * scale.getWidth());
+                //scaleMarginLayoutParams.height = (int)(0.7 * scale.getWidth());
+                //scaleMarginLayoutParams.rightMargin = (int)(0.5 * scale.getWidth());
+                //scale.setLayoutParams(scaleMarginLayoutParams);
+                //measureMarginLayoutParams = (ViewGroup.MarginLayoutParams)measure.getLayoutParams();
+                //measureMarginLayoutParams.width  = (int)(0.5* rootView.getWidth());
+                //measureMarginLayoutParams.height = (int)(0.5* rootView.getWidth());
+
                 //最初のボムの更新
                 updateBom(rootView.getWidth(), rootView.getHeight());
                 //リスナーを削除する
@@ -109,14 +117,8 @@ public class HomeFragment extends Fragment{
         return rootView;
     }
 
-    private void updateBom(int width, int height) {
-        /* ボムサイズの変更
-         * bom size is changes "sizeStep" times.
-         * bom scale is changes "scaleStep" times.
-         * */
-        bombLayoutParams = bomb.getLayoutParams();
-        bombMarginLayoutParams = (ViewGroup.MarginLayoutParams)bombLayoutParams;
 
+    private void getTotalValue(){
         //サーバーからvalueを取得
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setFunc(new FuncInterface() {
@@ -136,14 +138,22 @@ public class HomeFragment extends Fragment{
         String url = "http://210.140.70.106/api/v1/users/"+UserModel.getId()+"/frustrations.json";
         httpRequest.get(url);
 
-        //count+=1; // 後で消す.
-        int sizeStep = 3;
         //count<0の時にバグるの対策
         if(count<0) {
             Log.d("count<0", "" + count);
             count = 0;
         }
+    }
 
+    private void updateBom(int width, int height) {
+        /* ボムサイズの変更
+         * bom size is changes "sizeStep" times.
+         * bom scale is changes "scaleStep" times.
+         * */
+        bombLayoutParams = bomb.getLayoutParams();
+        bombMarginLayoutParams = (ViewGroup.MarginLayoutParams)bombLayoutParams;
+
+        int sizeStep = 3;
         int numberOfFrustrations = count;
         Log.d("count", "" + count);
         int bombSize  = (int)numberOfFrustrations % sizeStep; // for bom_image size
@@ -152,14 +162,18 @@ public class HomeFragment extends Fragment{
         bombMarginLayoutParams.rightMargin = (int)(width * 0.5 * (0.9 - 0.4 * bombSize)); //画面右端からの長さを指定
         bomb.setLayoutParams(bombMarginLayoutParams);
 
+        ImageView scaleImage;
+
         // scale の画像設定
         if (bombScale < scales.length) {
             scale.setImageResource(scales[bombScale]);
+            scale.setColorFilter(0xfff3a9cd, PorterDuff.Mode.SRC_IN);
         } else {
             scale.setImageResource(scales[scales.length - 1]);
+            scale.setColorFilter(0xfff3a9cd,PorterDuff.Mode.SRC_IN);
         }
 
-        measure.setText("やばい×" + bombScale);
+        //measure.setText("やばい×" + bombScale);
     }
 
     AnimatorSet animatorSet;
