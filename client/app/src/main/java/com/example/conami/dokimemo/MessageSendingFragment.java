@@ -13,6 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import android.widget.TextView;
+import android.app.Activity;
+import android.widget.SeekBar;
+import android.widget.Toast;
+
+
 public class MessageSendingFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -77,16 +83,22 @@ public class MessageSendingFragment extends Fragment {
 
     /* call when ok-button tapped */
     public void onOkClick() {
+
+        //SeekBer
+        SeekBar seekBar = (SeekBar) getActivity().findViewById(R.id.FrustrationBar);
+        int prg = seekBar.getProgress() - 5;
+        String value = String.valueOf(prg);
+
         /* get text from edit text box */
-        EditText editTextTitle   = (EditText)getActivity().findViewById(R.id.edit_text_sending_title);
-        EditText editTextMessage = (EditText)getActivity().findViewById(R.id.edit_text_sending_message);
-        String title   = editTextTitle.getText().toString();
+        EditText editTextTitle = (EditText) getActivity().findViewById(R.id.edit_text_sending_title);
+        EditText editTextMessage = (EditText) getActivity().findViewById(R.id.edit_text_sending_message);
+        String title = editTextTitle.getText().toString();
         String message = editTextMessage.getText().toString();
 
         /* send http request */
-        String json = "{\"frustrations\": [{\"title\": \"" + title + "\",\"message\": \"" + message + "\",\"value\": 0}]}";
+        String json = "{\"frustrations\": [{\"title\": \"" + title + "\",\"message\": \"" + message + "\",\"value\": \"" + value + "\"}]}";
         HttpRequest httpRequest = new HttpRequest();
-        httpRequest.post("http://210.140.69.130/api/v1/users/" + UserModel.getId() + "/frustrations.json", json);
+        httpRequest.post("http://210.140.70.106/api/v1/users/" + UserModel.getId() + "/frustrations.json", json);
 
         /* clear edit text box */
         editTextTitle.getEditableText().clear();
