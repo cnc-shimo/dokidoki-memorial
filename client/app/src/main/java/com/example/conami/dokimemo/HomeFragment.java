@@ -35,20 +35,13 @@ public class HomeFragment extends Fragment{
     ViewGroup.MarginLayoutParams measureMarginLayoutParams;
     int maxAnimationNumber =10; // 後で消す.
     int[] scales = {
-            R.drawable.ic_atom,
-            R.drawable.ic_microorganism,
-            //R.drawable.ic_planaria,
             R.drawable.ic_mouse,
             R.drawable.ic_cat,
-            R.drawable.ic_car,
+            R.drawable.ic_wolf,
+            R.drawable.ic_lion,
+            R.drawable.ic_elephant,
             R.drawable.ic_whale,
-            //R.drawable.ic_airplane,
-            R.drawable.ic_mt_fuji,
-            R.drawable.ic_japan,
-            R.drawable.ic_moon,
-            R.drawable.ic_earth,
-            R.drawable.ic_galaxy,
-            R.drawable.ic_infty
+
     };
 
     ImageView scale;
