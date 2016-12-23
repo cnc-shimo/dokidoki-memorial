@@ -4,73 +4,58 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
 
-        <Space
+        <TextView
+            android:text="Title"
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:id="@+id/list_frustration_title"
+            android:layout_weight="1" />
 
-        <LinearLayout
+        <TextView
+            android:text="Message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="26dp"
+            android:id="@+id/list_frustration_message"
+            android:layout_weight="0.73" />
+
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="38dp">
-
-            <Space
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_width="15dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
 
             <TextView
-                android:text="Title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:id="@+id/list_frustration_title"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="55dp">
-
-            <Space
-                android:layout_width="26dp"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:text="Message"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/list_frustration_message"
-                android:layout_weight="0.73" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="33dp">
-
-            <TextView
+                android:id="@+id/list_frustration_date"
                 android:text="date"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/date"
-                android:layout_weight="1"
-                android:layout_width="600dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginTop="10dp"
                 android:textSize="10sp" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:id="@+id/list_frustration_icon"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_heart"
-                android:id="@+id/frastration_icon"
-                android:layout_weight="1" />
-        </LinearLayout>
+                android:layout_marginEnd="26dp"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
 
     </LinearLayout>
+
 
 </RelativeLayout>
