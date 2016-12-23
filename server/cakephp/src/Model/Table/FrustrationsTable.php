@@ -3,7 +3,9 @@
 namespace App\Model\Table;
 
 use Cake\Database\Expression\IdentifierExpression;
+use Cake\I18n\Time;
 use Cake\ORM\Table;
+use DateTimeImmutable;
 
 /**
  * @author shimomo0502
@@ -55,13 +57,18 @@ class FrustrationsTable extends Table
             'updated_at',
         ]);
 
+        $coupleId     = 1;
+        $isRead       = false;
+        $isEliminated = false;
+        $createdAt    = Time::now();
+
         foreach ($data as $d) {
-            $d['user_id'] = $userId;
-            $d['couple_id'] = 1;
-            $d['is_read'] = false;
-            $d['is_eliminated'] = false;
-            $d['created_at'] = '2000/01/01 00:00:00';
-            $d['updated_at'] = '2000/01/01 00:00:00';
+            $d['user_id']       = $userId;
+            $d['couple_id']     = $coupleId;
+            $d['is_read']       = $isRead;
+            $d['is_eliminated'] = $isEliminated;
+            $d['created_at']    = $createdAt;
+            $d['updated_at']    = $createdAt;
             $query->values($d);
         }
 
