@@ -15,7 +15,14 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.zip.DataFormatException;
 
 public class FrustrationListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -54,6 +61,11 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
             FrustrationMessage frustrationMessage = new FrustrationMessage();
             frustrationMessage.setTitle("メッセージを送ってもらおう！！");
             frustrationMessage.setMessage("下に引っ張るとメッセージを更新！！");
+
+            DateFormat df =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.XXX", Locale.JAPAN);
+            java.util.Date d = new java.util.Date();
+            frustrationMessage.setDate(df.format(d));
+
             messages.add(frustrationMessage);
         }
 
@@ -187,13 +199,39 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
 
             ((TextView)convertView.findViewById(R.id.list_frustration_title)).setText(messages.get(position).getTitle());
             ((TextView)convertView.findViewById(R.id.list_frustration_message)).setText(messages.get(position).getMessage());
-            ((TextView)convertView.findViewById(R.id.list_frustration_date)).setText(messages.get(position).getDate());
+
+
+            DateFormat srcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.XXX", Locale.JAPAN);
+            DateFormat destFormat = new SimpleDateFormat("yyyy'/'MM'/'dd", Locale.JAPAN);
+            try {
+                Date res = srcFormat.parse(messages.get(position).getDate());
+                ((TextView) convertView.findViewById(R.id.list_frustration_date)).setText(destFormat.format(res));
+            } catch (ParseException e) {
+                Log.d("DateFormat", e.toString());
+            }
+
 
             Integer value = messages.get(position).getValue();
+            ImageView icon1 =  (ImageView)convertView.findViewById(R.id.list_frustration_icon);
+            ImageView icon2 =  (ImageView)convertView.findViewById(R.id.list_frustration_icon2);
+            ImageView icon3 =  (ImageView)convertView.findViewById(R.id.list_frustration_icon3);
+
             if(value > 0) {
-                ((ImageView)convertView.findViewById(R.id.list_frustration_icon)).setImageResource(R.drawable.ic_heart);
+                if (value > 7) {
+                    icon3.setImageResource(R.drawable.ic_bomb_icon);
+                }
+                if(value > 4) {
+                    icon2.setImageResource(R.drawable.ic_bomb_icon);
+                }
+                icon1.setImageResource(R.drawable.ic_bomb_icon);
             } else {
-                ((ImageView)convertView.findViewById(R.id.list_frustration_icon)).setImageResource(R.drawable.ic_bomb_icon);
+                if(value < -7) {
+                    icon3.setImageResource(R.drawable.ic_heart);
+                }
+                if(value < -4) {
+                    icon2.setImageResource(R.drawable.ic_heart);
+                }
+                icon1.setImageResource(R.drawable.ic_heart);
             }
 
             return convertView;
