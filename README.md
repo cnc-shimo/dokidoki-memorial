@@ -3,13 +3,13 @@
 
 ![どきどきメモリアル](https://shimomo.sakura.ne.jp/dokimemo/logo.png "どきどきメモリアル")
 
-## Demo
+## デモ
 準備中
 
-## Usage
+## 使用方法
 準備中
 
-## Author
+## 著者
  * [kisukeeee](https://github.com/kisukeeee "kisukeeee")
  * [kyoumoto](https://github.com/kyoumoto "kyoumoto")
  * [mayok](https://github.com/mayok "mayok")
