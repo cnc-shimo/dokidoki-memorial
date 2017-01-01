@@ -22,11 +22,7 @@
         android:layout_weight="0.35"
         android:gravity="top"
         android:hint="message..."
-        android:layout_height="80dp" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -57,14 +53,10 @@
             android:layout_width="wrap_content" />
     </LinearLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="320dp">
+        android:layout_height="wrap_content">
 
         <Space
             android:layout_height="wrap_content"
@@ -72,10 +64,13 @@
             android:layout_width="80dp" />
 
         <Button
-            android:layout_width="341dp"
-            android:background="@drawable/ic_diary1"
+            android:layout_width="45dp"
+            android:background="@drawable/ic_pen"
             android:id="@+id/button_send"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:text="保存"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-medium" />
 
         <Space
             android:layout_height="wrap_content"

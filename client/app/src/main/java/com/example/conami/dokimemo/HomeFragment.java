@@ -76,33 +76,47 @@ public class HomeFragment extends Fragment{
                 //なんかここは何回も呼び出されているっぽい.どうにかしたい.
                 //scale画像の設定.
                 // onCreate内でやろうとすると一旦rootViewを秒が描画してからでないとviewのサイズが取れない.
-                getTotalValue();
-                ArrayList<ImageView> scaleList = new ArrayList<ImageView>();
-                scaleList.add((ImageView)rootView.findViewById(R.id.scale1));
-                scaleList.add((ImageView)rootView.findViewById(R.id.scale2));
-                scaleList.add((ImageView)rootView.findViewById(R.id.scale3));
-                scaleList.add((ImageView)rootView.findViewById(R.id.scale4));
-                scaleList.add((ImageView)rootView.findViewById(R.id.scale5));
-                scaleList.add((ImageView)rootView.findViewById(R.id.scale6));
 
-                int scaleNum = count/3;
-                if(scaleNum>5) {
-                    scale = scaleList.get(5);
-                }else{
-                    scale = scaleList.get(scaleNum);
-                }
+                HttpRequest httpRequest = new HttpRequest();
+                httpRequest.setFunc(new FuncInterface() {
+                    @Override
+                    public void func(TextView textView, String json) {//jsonはGETで取得したjsonの文字列．
+                        try {
+                            Log.d("json", json);
+                            JSONObject jsonObject = new JSONObject(json);
+                            count = jsonObject.getInt("total_value");
 
-                //scaleMarginLayoutParams = (ViewGroup.MarginLayoutParams)scale.getLayoutParams();
-                //scaleMarginLayoutParams.width  = (int)(0.7 * scale.getWidth());
-                //scaleMarginLayoutParams.height = (int)(0.7 * scale.getWidth());
-                //scaleMarginLayoutParams.rightMargin = (int)(0.5 * scale.getWidth());
-                //scale.setLayoutParams(scaleMarginLayoutParams);
-                //measureMarginLayoutParams = (ViewGroup.MarginLayoutParams)measure.getLayoutParams();
-                //measureMarginLayoutParams.width  = (int)(0.5* rootView.getWidth());
-                //measureMarginLayoutParams.height = (int)(0.5* rootView.getWidth());
+                            ArrayList<ImageView> scaleList = new ArrayList<ImageView>();
+                            scaleList.add((ImageView)rootView.findViewById(R.id.scale1));
+                            scaleList.add((ImageView)rootView.findViewById(R.id.scale2));
+                            scaleList.add((ImageView)rootView.findViewById(R.id.scale3));
+                            scaleList.add((ImageView)rootView.findViewById(R.id.scale4));
+                            scaleList.add((ImageView)rootView.findViewById(R.id.scale5));
+                            scaleList.add((ImageView)rootView.findViewById(R.id.scale6));
 
-                //最初のボムの更新
-                updateBom(rootView.getWidth(), rootView.getHeight());
+                            //count<0の時にバグるの対策
+                            if(count<0) {
+                                Log.d("count<0", "" + count);
+                                count = 0;
+                            }
+
+                            int scaleNum = count/3;
+                            if(scaleNum>5) {
+                                scale = scaleList.get(5);
+                            }else{
+                                scale = scaleList.get(scaleNum);
+                            }
+                            //ボムとスケールの更新
+                            updateBom(rootView.getWidth(), rootView.getHeight());
+                        } catch (JSONException e) {
+                            Log.e("JSONExeption", e.toString());
+                        }
+                    }
+                });
+                //String url = "http://210.140.69.130/api/v1/users/"+UserModel.getId()+"/frustrations.json";
+                String url = "http://210.140.70.106/api/v1/users/"+UserModel.getId()+"/frustrations.json";
+                httpRequest.get(url);
+
                 //リスナーを削除する
                 rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -173,7 +187,6 @@ public class HomeFragment extends Fragment{
             scale.setColorFilter(0xfff3a9cd,PorterDuff.Mode.SRC_IN);
         }
 
-        //measure.setText("やばい×" + bombScale);
     }
 
     AnimatorSet animatorSet;
