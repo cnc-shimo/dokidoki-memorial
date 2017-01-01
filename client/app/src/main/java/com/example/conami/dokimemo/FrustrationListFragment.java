@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.zip.DataFormatException;
 
-public class FrustrationListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class FrustrationListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -116,6 +116,8 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
         // 更新が終了したらインジケータ非表示
         mSwipeRefreshLayout.setRefreshing(false);
     }
+
+
 
     public class FrustrationMessage {
         long id;
