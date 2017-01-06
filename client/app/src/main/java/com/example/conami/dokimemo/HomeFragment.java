@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment{
                             }
 
                             //status の表示変更
-                            int numberOfStatus = 2;//totalValue/3;
+                            int numberOfStatus = totalValue/3;
                             if(numberOfStatus > statuses.length - 2){
                                 // ボムの時
                                 status.setImageResource(statuses[statuses.length-1]);
