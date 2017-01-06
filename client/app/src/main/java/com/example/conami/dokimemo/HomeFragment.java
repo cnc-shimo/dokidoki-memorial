@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment{
             R.drawable.ic_sad_face,
             R.drawable.ic_bomb_icon
     };
+    int stepSize = 3;
 
     public HomeFragment() {}
 
@@ -81,7 +82,7 @@ public class HomeFragment extends Fragment{
                             }
 
                             //status の表示変更
-                            int numberOfStatus = totalValue/3;
+                            int numberOfStatus = totalValue/stepSize;
                             if(numberOfStatus > statuses.length - 2){
                                 // ボムの時
                                 status.setImageResource(statuses[statuses.length-1]);
@@ -109,7 +110,6 @@ public class HomeFragment extends Fragment{
 
         return rootView;
     }
-
 
     private void getTotalValue(){
         //サーバーからvalueを取得
@@ -139,17 +139,17 @@ public class HomeFragment extends Fragment{
     }
 
     private void updateBom(int width, int height) {
-        /* ボムサイズの変更
-         * bom size is changes "sizeStep" times.
-         * bom scale is changes "scaleStep" times.
-         * */
+        /* ボムサイズの変更 */
         bombLayoutParams = status.getLayoutParams();
         bombMarginLayoutParams = (ViewGroup.MarginLayoutParams)bombLayoutParams;
 
-        int sizeStep = 3;
+        int bombstepSize = 3;
         int numberOfFrustrations = totalValue;
         Log.d("totalValue", "" + totalValue);
-        int bombSize  = (int)numberOfFrustrations % sizeStep; // for bom_image size
+        int bombSize  = (int) (numberOfFrustrations - (statuses.length - 1) * stepSize)/ bombstepSize; // ボム以外の分を差し引いて，ボムサイズを計算
+        if(bombSize > 2){
+            bombSize = 2;
+        }
         bombMarginLayoutParams.leftMargin  = (int)(width * 0.5 * (0.9 - 0.4 * bombSize)); //画面左端からの長さを指定
         bombMarginLayoutParams.rightMargin = (int)(width * 0.5 * (0.9 - 0.4 * bombSize)); //画面右端からの長さを指定
         status.setLayoutParams(bombMarginLayoutParams);
