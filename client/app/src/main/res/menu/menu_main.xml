@@ -21,7 +21,7 @@
         />
     <item
         android:id="@+id/menu_frustration_message"
-        android:icon="@drawable/ic_mail"
-        android:title="FrustrationMessage"
+        android:icon="@drawable/ic_enpitu"
+        android:title="Note"
         app:showAsAction="always" />
 </menu>

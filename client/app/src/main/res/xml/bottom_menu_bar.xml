@@ -10,14 +10,14 @@
     <tab
         id="@+id/tab_frustration"
         icon="@drawable/ic_book"
-        title="Memorial"
+        title="Diary"
         activColor="@color/colorPrimary"
         />
 
     <tab
         id="@+id/tab_settings"
-        icon="@drawable/ic_mail"
-        title="Message"
+        icon="@drawable/ic_enpitu"
+        title="Note"
         activColor="@color/colorPrimary"
         />
 </tabs>
