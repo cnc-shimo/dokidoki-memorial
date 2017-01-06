@@ -62,7 +62,7 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
             frustrationMessage.setTitle("メッセージを送ってもらおう！！");
             frustrationMessage.setMessage("下に引っ張るとメッセージを更新！！");
 
-            DateFormat df =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.XXX", Locale.JAPAN);
+            DateFormat df =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.JAPAN);
             java.util.Date d = new java.util.Date();
             frustrationMessage.setDate(df.format(d));
 
@@ -203,8 +203,8 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
             ((TextView)convertView.findViewById(R.id.list_frustration_message)).setText(messages.get(position).getMessage());
 
 
-            DateFormat srcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.XXX", Locale.JAPAN);
-            DateFormat destFormat = new SimpleDateFormat("yyyy'/'MM'/'dd", Locale.JAPAN);
+            DateFormat srcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.JAPAN);
+            DateFormat destFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN);
             try {
                 Date res = srcFormat.parse(messages.get(position).getDate());
                 ((TextView) convertView.findViewById(R.id.list_frustration_date)).setText(destFormat.format(res));

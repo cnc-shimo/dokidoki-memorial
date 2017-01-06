@@ -16,7 +16,7 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:inputType="textPersonName"
+        android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/edit_text_sending_message"
         android:layout_weight="0.35"
