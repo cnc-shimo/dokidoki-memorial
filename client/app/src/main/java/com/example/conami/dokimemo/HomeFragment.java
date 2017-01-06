@@ -29,23 +29,9 @@ import static android.R.attr.width;
 public class HomeFragment extends Fragment{
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    View rootView;
     ImageView status;
     ViewGroup.LayoutParams bombLayoutParams;
     ViewGroup.MarginLayoutParams bombMarginLayoutParams;
-    TextView measure;
-    ViewGroup.MarginLayoutParams measureMarginLayoutParams;
-    int maxAnimationNumber =10; // 後で消す.
-
-    int[] scales = {
-            R.mipmap.ic_mouse,
-            R.mipmap.ic_cat2,
-            R.mipmap.ic_wolf,
-            R.mipmap.ic_lion,
-            R.mipmap.ic_elephant,
-            R.mipmap.ic_whale,
-
-    };
 
     int[] statuses = {
             R.drawable.ic_happy_face,
@@ -54,8 +40,6 @@ public class HomeFragment extends Fragment{
             R.drawable.ic_bomb_icon
     };
 
-    ImageView scale;
-    ViewGroup.MarginLayoutParams scaleMarginLayoutParams;
     public HomeFragment() {}
 
     public static HomeFragment newInstance(int sectionNumber) {
@@ -79,7 +63,6 @@ public class HomeFragment extends Fragment{
             @Override
             //rootView描画後の処理
             public void onGlobalLayout() {
-                // scale画像の設定.
                 // onCreate内でやろうとすると一旦rootViewを秒が描画してからでないとviewのサイズが取れない.
 
                 HttpRequest httpRequest = new HttpRequest();
@@ -91,25 +74,10 @@ public class HomeFragment extends Fragment{
                             JSONObject jsonObject = new JSONObject(json);
                             totalValue = jsonObject.getInt("total_value");
 
-                            ArrayList<ImageView> scaleList = new ArrayList<ImageView>();
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale1));
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale2));
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale3));
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale4));
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale5));
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale6));
-
                             //totalValue<0の時にバグるの対策
                             if(totalValue<0) {
                                 Log.d("totalValue<0", "" + totalValue);
                                 totalValue = 0;
-                            }
-
-                            int scaleNum = totalValue/3;
-                            if(scaleNum>5) {
-                                scale = scaleList.get(5);
-                            }else{
-                                scale = scaleList.get(scaleNum);
                             }
 
                             //status の表示変更
@@ -182,21 +150,9 @@ public class HomeFragment extends Fragment{
         int numberOfFrustrations = totalValue;
         Log.d("totalValue", "" + totalValue);
         int bombSize  = (int)numberOfFrustrations % sizeStep; // for bom_image size
-        int bombScale = (int)numberOfFrustrations / sizeStep;
         bombMarginLayoutParams.leftMargin  = (int)(width * 0.5 * (0.9 - 0.4 * bombSize)); //画面左端からの長さを指定
         bombMarginLayoutParams.rightMargin = (int)(width * 0.5 * (0.9 - 0.4 * bombSize)); //画面右端からの長さを指定
         status.setLayoutParams(bombMarginLayoutParams);
-
-        ImageView scaleImage;
-
-        // scale の画像設定
-        if (bombScale < scales.length) {
-            scale.setImageResource(scales[bombScale]);
-            scale.setColorFilter(0xfff3a9cd, PorterDuff.Mode.SRC_IN);
-        } else {
-            scale.setImageResource(scales[scales.length - 1]);
-            scale.setColorFilter(0xfff3a9cd,PorterDuff.Mode.SRC_IN);
-        }
 
     }
 
