@@ -21,7 +21,8 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:src="@mipmap/ic_bg"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:layout_marginTop="-90dp"/>
     </RelativeLayout>
 
 

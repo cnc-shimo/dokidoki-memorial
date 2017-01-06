@@ -6,6 +6,15 @@
     android:weightSum="1"
     android:id="@+id/layout_sending_message">
 
+    <TextView
+        android:text="Note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:textStyle="normal|bold"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,16 +70,18 @@
         <Space
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_width="80dp" />
+            android:layout_width="55dp" />
 
         <Button
             android:layout_width="45dp"
             android:background="@drawable/ic_pen"
             android:id="@+id/button_send"
             android:layout_height="wrap_content"
-            android:text="保存"
+            android:text="Save"
             android:textSize="18sp"
-            android:fontFamily="sans-serif-medium" />
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal|bold"
+            android:textAllCaps="false" />
 
         <Space
             android:layout_height="wrap_content"

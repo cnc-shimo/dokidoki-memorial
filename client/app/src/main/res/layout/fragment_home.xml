@@ -7,6 +7,15 @@
     android:gravity="center"
     android:weightSum="2">
 
+    <TextView
+        android:text="Home"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/textView3"
+        android:textSize="30sp"
+        android:textStyle="normal|bold"
+        android:textAlignment="center" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
