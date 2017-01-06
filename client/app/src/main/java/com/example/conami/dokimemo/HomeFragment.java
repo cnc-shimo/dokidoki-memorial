@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -28,25 +29,17 @@ import static android.R.attr.width;
 public class HomeFragment extends Fragment{
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    View rootView;
-    ImageView bomb;
+    ImageView status;
     ViewGroup.LayoutParams bombLayoutParams;
     ViewGroup.MarginLayoutParams bombMarginLayoutParams;
-    TextView measure;
-    ViewGroup.MarginLayoutParams measureMarginLayoutParams;
-    int maxAnimationNumber =10; // 後で消す.
-    int[] scales = {
-            R.mipmap.ic_mouse,
-            R.mipmap.ic_cat2,
-            R.mipmap.ic_wolf,
-            R.mipmap.ic_lion,
-            R.mipmap.ic_elephant,
-            R.mipmap.ic_whale,
 
+    int[] statuses = {
+            R.drawable.ic_happy_face,
+            R.drawable.ic_normal_face,
+            R.drawable.ic_sad_face,
+            R.drawable.ic_bomb_icon
     };
 
-    ImageView scale;
-    ViewGroup.MarginLayoutParams scaleMarginLayoutParams;
     public HomeFragment() {}
 
     public static HomeFragment newInstance(int sectionNumber) {
@@ -57,24 +50,19 @@ public class HomeFragment extends Fragment{
         return fragment;
     }
 
-    int count = -1; // 後で消す.
-    boolean call = false; // 後で消す.
+    int totalValue = -1; // 後で消す.
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        bomb = (ImageView)rootView.findViewById(R.id.image_bomb);
-
-        //measure = (TextView)rootView.findViewById(R.id.text_measure);
+        status = (ImageView)rootView.findViewById(R.id.image_status);
 
         ViewTreeObserver viewTreeObserver = rootView.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             //rootView描画後の処理
             public void onGlobalLayout() {
-                //なんかここは何回も呼び出されているっぽい.どうにかしたい.
-                //scale画像の設定.
                 // onCreate内でやろうとすると一旦rootViewを秒が描画してからでないとviewのサイズが取れない.
 
                 HttpRequest httpRequest = new HttpRequest();
@@ -84,30 +72,27 @@ public class HomeFragment extends Fragment{
                         try {
                             Log.d("json", json);
                             JSONObject jsonObject = new JSONObject(json);
-                            count = jsonObject.getInt("total_value");
+                            totalValue = jsonObject.getInt("total_value");
 
-                            ArrayList<ImageView> scaleList = new ArrayList<ImageView>();
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale1));
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale2));
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale3));
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale4));
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale5));
-                            scaleList.add((ImageView)rootView.findViewById(R.id.scale6));
-
-                            //count<0の時にバグるの対策
-                            if(count<0) {
-                                Log.d("count<0", "" + count);
-                                count = 0;
+                            //totalValue<0の時にバグるの対策
+                            if(totalValue<0) {
+                                Log.d("totalValue<0", "" + totalValue);
+                                totalValue = 0;
                             }
 
-                            int scaleNum = count/3;
-                            if(scaleNum>5) {
-                                scale = scaleList.get(5);
+                            //status の表示変更
+                            int numberOfStatus = totalValue/3;
+                            if(numberOfStatus > statuses.length - 2){
+                                // ボムの時
+                                status.setImageResource(statuses[statuses.length-1]);
+                                //ボムとスケールの更新
+                                updateBom(rootView.getWidth(), rootView.getHeight());
+                                //ボムのアニメーション設定
+                                animateBomb(status);
                             }else{
-                                scale = scaleList.get(scaleNum);
+                                // ボム以外の時
+                                status.setImageResource(statuses[numberOfStatus]);
                             }
-                            //ボムとスケールの更新
-                            updateBom(rootView.getWidth(), rootView.getHeight());
                         } catch (JSONException e) {
                             Log.e("JSONExeption", e.toString());
                         }
@@ -122,12 +107,6 @@ public class HomeFragment extends Fragment{
             }
         });
 
-        if (call) {
-            // ToDo
-        } else {
-            animateBomb(bomb);
-        }
-
         return rootView;
     }
 
@@ -141,7 +120,7 @@ public class HomeFragment extends Fragment{
                 try {
                     Log.d("json", json);
                     JSONObject jsonObject = new JSONObject(json);
-                    count = jsonObject.getInt("total_value");
+                    totalValue = jsonObject.getInt("total_value");
 
                 } catch (JSONException e) {
                     Log.e("JSONExeption", e.toString());
@@ -152,10 +131,10 @@ public class HomeFragment extends Fragment{
         String url = "http://210.140.70.106/api/v1/users/"+UserModel.getId()+"/frustrations.json";
         httpRequest.get(url);
 
-        //count<0の時にバグるの対策
-        if(count<0) {
-            Log.d("count<0", "" + count);
-            count = 0;
+        //totalValue<0の時にバグるの対策
+        if(totalValue<0) {
+            Log.d("totalValue<0", "" + totalValue);
+            totalValue = 0;
         }
     }
 
@@ -164,32 +143,21 @@ public class HomeFragment extends Fragment{
          * bom size is changes "sizeStep" times.
          * bom scale is changes "scaleStep" times.
          * */
-        bombLayoutParams = bomb.getLayoutParams();
+        bombLayoutParams = status.getLayoutParams();
         bombMarginLayoutParams = (ViewGroup.MarginLayoutParams)bombLayoutParams;
 
         int sizeStep = 3;
-        int numberOfFrustrations = count;
-        Log.d("count", "" + count);
+        int numberOfFrustrations = totalValue;
+        Log.d("totalValue", "" + totalValue);
         int bombSize  = (int)numberOfFrustrations % sizeStep; // for bom_image size
-        int bombScale = (int)numberOfFrustrations / sizeStep;
         bombMarginLayoutParams.leftMargin  = (int)(width * 0.5 * (0.9 - 0.4 * bombSize)); //画面左端からの長さを指定
         bombMarginLayoutParams.rightMargin = (int)(width * 0.5 * (0.9 - 0.4 * bombSize)); //画面右端からの長さを指定
-        bomb.setLayoutParams(bombMarginLayoutParams);
-
-        ImageView scaleImage;
-
-        // scale の画像設定
-        if (bombScale < scales.length) {
-            scale.setImageResource(scales[bombScale]);
-            scale.setColorFilter(0xfff3a9cd, PorterDuff.Mode.SRC_IN);
-        } else {
-            scale.setImageResource(scales[scales.length - 1]);
-            scale.setColorFilter(0xfff3a9cd,PorterDuff.Mode.SRC_IN);
-        }
+        status.setLayoutParams(bombMarginLayoutParams);
 
     }
 
     AnimatorSet animatorSet;
+    boolean canceldBombAnimation = true;
     private void animateBomb(ImageView target) {
         // AnimatorSetに渡すAnimatorのリストです
         List<Animator> animatorList= new ArrayList<Animator>();
@@ -203,7 +171,7 @@ public class HomeFragment extends Fragment{
         // ０．５秒かけて実行させます.
         scaleDown.setDuration(500);
 
-        // 倍率を０．５から１．５へ変化.
+        // 倍率を０．７から１．５へ変化.
         ObjectAnimator scaleUp = ObjectAnimator.ofPropertyValuesHolder(target,
                 PropertyValuesHolder.ofFloat("scaleX", 1.5f),
                 PropertyValuesHolder.ofFloat("scaleY", 1.5f),
@@ -237,22 +205,21 @@ public class HomeFragment extends Fragment{
 
         animatorSet.addListener(new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animator animation) {}
+            public void onAnimationStart(Animator animation) {
+                canceldBombAnimation = false;
+            }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (maxAnimationNumber > 0) {
-                    animatorSet.start();
-                    maxAnimationNumber -= 1;
-                } else {
-                    maxAnimationNumber = 10;
-                    animatorSet.end();
+                if(canceldBombAnimation) {
+                }else{
+                    animation.start();
                 }
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-                animatorSet.end();
+                canceldBombAnimation = true;
             }
 
             @Override
