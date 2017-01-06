@@ -111,6 +111,26 @@ public class HomeFragment extends Fragment{
         return rootView;
     }
 
+    /***
+     * フォアグラウンドでなくなった場合に呼び出される
+     */
+    @Override
+    public void onStop() {
+        animatorSet.cancel();
+        super.onStop();
+        Log.d("debug", "onStop");
+    }
+
+    /***
+     * Fragmentの内部のViewリソースの整理を行う
+     */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d("debug", "onDestroyView");
+    }
+
+
     private void getTotalValue(){
         //サーバーからvalueを取得
         HttpRequest httpRequest = new HttpRequest();
@@ -157,7 +177,7 @@ public class HomeFragment extends Fragment{
     }
 
     AnimatorSet animatorSet;
-    boolean canceldBombAnimation = true;
+    boolean canceledBombAnimation = false;
     private void animateBomb(ImageView target) {
         // AnimatorSetに渡すAnimatorのリストです
         List<Animator> animatorList= new ArrayList<Animator>();
@@ -206,20 +226,24 @@ public class HomeFragment extends Fragment{
         animatorSet.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                canceldBombAnimation = false;
+                canceledBombAnimation = false;
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                if(canceldBombAnimation) {
+                if(canceledBombAnimation) {
+                    Log.d("debug","animation cancel");
                 }else{
+                    Log.d("debug","animation start");
                     animation.start();
                 }
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-                canceldBombAnimation = true;
+                Log.d("debug","animation cancel");
+                canceledBombAnimation = true;
+                animation.end();
             }
 
             @Override
