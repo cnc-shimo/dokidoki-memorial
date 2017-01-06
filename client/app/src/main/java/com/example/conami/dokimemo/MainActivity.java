@@ -21,6 +21,7 @@ import com.roughike.bottombar.OnTabSelectListener;
 public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private BottomBar mBottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +40,17 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageSelected(int position) {}
+            public void onPageSelected(int position) {
+                if(position != mBottomBar.getCurrentTabPosition())
+                    mBottomBar.selectTabAtPosition(position);
+            }
 
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
         
-        BottomBar bottomBar = (BottomBar)findViewById(R.id.bottomBar);
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        mBottomBar = (BottomBar)findViewById(R.id.bottomBar);
+        mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 switch(tabId) {
