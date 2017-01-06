@@ -87,6 +87,11 @@ public class MessageSendingFragment extends Fragment {
         //SeekBer
         SeekBar seekBar = (SeekBar) getActivity().findViewById(R.id.FrustrationBar);
         int prg = seekBar.getProgress() - 5;
+        if(prg < 0) {
+            prg = prg * 2;
+        }else{
+            prg = prg * 3;
+        }
         String value = String.valueOf(prg);
 
         /* get text from edit text box */
