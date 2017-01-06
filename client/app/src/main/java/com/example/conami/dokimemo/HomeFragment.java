@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        status = (ImageView)rootView.findViewById(R.id.image_bomb);
+        status = (ImageView)rootView.findViewById(R.id.image_status);
 
         ViewTreeObserver viewTreeObserver = rootView.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

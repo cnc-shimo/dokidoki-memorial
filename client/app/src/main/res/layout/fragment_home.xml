@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:srcCompat="@drawable/ic_bomb_icon"
-                android:id="@+id/image_bomb"
+                android:id="@+id/image_status"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="false"
                 android:layout_alignParentTop="true"
