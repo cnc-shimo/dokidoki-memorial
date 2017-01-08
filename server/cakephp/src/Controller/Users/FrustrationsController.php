@@ -26,7 +26,7 @@ class FrustrationsController extends AppController
     /**
      * @var array
      */
-    public $components = ['RequestHandler'];
+    public $components = ['RequestHandler', 'PushNotification'];
 
     /**
      * @return void
@@ -94,6 +94,7 @@ class FrustrationsController extends AppController
         $data = $this->request->input('json_decode', true)['frustrations'];
         $result = $this->Frustrations->postFrustrations($userId, $data);
         $frustrations = $this->Frustrations->getFrustrations(['Frustrations.user_id' => $userId]);
+        $this->PushNotification->send('どきどきメモリアル', 'テスト通知');
         $this->set([
             'frustrations' => $frustrations,
             '_serialize' => [
