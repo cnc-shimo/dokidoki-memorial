@@ -104,35 +104,3 @@ INSERT INTO couples (
   '2016/02/01 00:00:00',
   '2016/02/01 00:00:00'
 );
-
-INSERT INTO frustrations (
-  user_id,
-  couple_id,
-  title,
-  message,
-  value,
-  is_read,
-  is_eliminated,
-  created_at,
-  updated_at
-) VALUES (
-  1,
-  1,
-  '飯が不味い',
-  '昨日の晩飯が死ぬほど不味かった。何とかして欲しい。',
-  0,
-  false,
-  false,
-  '2016/03/01 00:00:00',
-  '2016/03/01 00:00:00'
-), (
-  2,
-  1,
-  '服装がダサい',
-  'デートの時はもう少しオシャレをして欲しい。',
-  0,
-  false,
-  false,
-  '2016/03/10 00:00:00',
-  '2016/03/10 00:00:00'
-);
