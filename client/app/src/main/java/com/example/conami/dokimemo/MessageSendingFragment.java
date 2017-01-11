@@ -57,12 +57,12 @@ public class MessageSendingFragment extends Fragment {
                 String message = editTextMessage.getText().toString();
 
                 if (title.equals("")) {
-                    new AlertDialog.Builder(getActivity()).setTitle("").setMessage("タイトルを入力してください").show();
+                    new AlertDialog.Builder(getActivity()).setTitle("").setMessage("title を入力してください").show();
                     return;
                 }
 
                 if(message.equals("")) {
-                    new AlertDialog.Builder(getActivity()).setTitle("").setMessage("メッセージを入力してください").show();
+                    new AlertDialog.Builder(getActivity()).setTitle("").setMessage("my heart を入力してください").show();
                     return;
                 }
 
@@ -70,11 +70,12 @@ public class MessageSendingFragment extends Fragment {
                 closeSoftwareKeyboard(view);
 
                 /* show HotToCommunicateDialogFragment */
-                Bundle bundle = new Bundle();
+                /*Bundle bundle = new Bundle();
                 HowToCommunicateDialogFragment howToCommunicateFragment = new HowToCommunicateDialogFragment();
                 howToCommunicateFragment.setArguments(bundle);
                 howToCommunicateFragment.setTargetFragment(MessageSendingFragment.this, 0);
                 howToCommunicateFragment.show(getFragmentManager(), "how_to_dialog");
+                */
             }
         });
 
@@ -110,7 +111,7 @@ public class MessageSendingFragment extends Fragment {
         editTextMessage.getEditableText().clear();
 
         /* show dialog */
-        new AlertDialog.Builder(getActivity()).setTitle("").setMessage("送信しました").show();
+        new AlertDialog.Builder(getActivity()).setTitle("").setMessage("メモリアル完了しました。").show();
     }
 
     /* close software keyboard */

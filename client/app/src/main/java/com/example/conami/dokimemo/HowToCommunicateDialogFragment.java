@@ -37,20 +37,20 @@ public class HowToCommunicateDialogFragment extends DialogFragment {
         listView.setAdapter(adapter);
         builder.setTitle("不満を伝える３ステップ!!");
         builder.setView(layout);
+        /*
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                /* 無理やり呼び出し元のフラグメントを取得 */
                 MessageSendingFragment target = (MessageSendingFragment)getTargetFragment();
 
                 if (target == null) {
                     Log.d("error","target is null point");
                 }
-
                 target.onOkClick();
             }
-        });
-        builder.setNegativeButton("Cancel", null);
+
+        });*/
+        builder.setNegativeButton("OK", null);
         return builder.create();
     }
 

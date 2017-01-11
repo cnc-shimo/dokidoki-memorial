@@ -30,7 +30,7 @@
         android:id="@+id/edit_text_sending_message"
         android:layout_weight="0.61"
         android:gravity="top"
-        android:hint="message..."
+        android:hint="my heart..."
         android:layout_height="30dp" />
 
     <Space

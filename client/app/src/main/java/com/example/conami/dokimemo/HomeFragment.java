@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment{
             R.drawable.ic_sad_face,
             R.drawable.ic_bomb_icon
     };
-    int stepSize = 3;
+    int stepSize = 15;
 
     public HomeFragment() {}
 
@@ -59,6 +59,18 @@ public class HomeFragment extends Fragment{
 
         status = (ImageView)rootView.findViewById(R.id.image_status);
 
+        status.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                Log.i("onClick","How to ");
+                /* show HotToCommunicateDialogFragment */
+                Bundle bundle = new Bundle();
+                HowToCommunicateDialogFragment howToCommunicateFragment = new HowToCommunicateDialogFragment();
+                howToCommunicateFragment.setArguments(bundle);
+                howToCommunicateFragment.setTargetFragment(HomeFragment.this, 0);
+                howToCommunicateFragment.show(getFragmentManager(), "how_to_dialog");
+
+            }
+        });
         ViewTreeObserver viewTreeObserver = rootView.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
