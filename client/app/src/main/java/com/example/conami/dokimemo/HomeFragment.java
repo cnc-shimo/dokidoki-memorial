@@ -128,7 +128,9 @@ public class HomeFragment extends Fragment{
      */
     @Override
     public void onStop() {
-        animatorSet.cancel();
+        if (animatorSet != null) {
+            animatorSet.cancel();
+        }
         super.onStop();
         Log.d("debug", "onStop");
     }

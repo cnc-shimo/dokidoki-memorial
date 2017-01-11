@@ -94,7 +94,7 @@ class FrustrationsController extends AppController
         $data = $this->request->input('json_decode', true)['frustrations'];
         $result = $this->Frustrations->postFrustrations($userId, $data);
         $frustrations = $this->Frustrations->getFrustrations(['Frustrations.user_id' => $userId]);
-        $this->PushNotification->send('どきどきメモリアル', 'テスト通知');
+        $this->PushNotification->send('どきメモ', 'お前、何かしたのか？');
         $this->set([
             'frustrations' => $frustrations,
             '_serialize' => [
