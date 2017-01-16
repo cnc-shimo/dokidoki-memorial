@@ -105,6 +105,10 @@ public class HomeFragment extends Fragment{
                             }else{
                                 // ボム以外の時
                                 status.setImageResource(statuses[numberOfStatus]);
+                                setFaceSize(rootView.getWidth(), rootView.getHeight());
+                                if (animatorSet != null) {
+                                    animatorSet.cancel();
+                                }
                             }
                         } catch (JSONException e) {
                             Log.e("JSONExeption", e.toString());
@@ -173,6 +177,18 @@ public class HomeFragment extends Fragment{
             Log.d("totalValue<0", "" + totalValue);
             totalValue = 0;
         }
+    }
+
+    ViewGroup.LayoutParams faceLayoutParams;
+    ViewGroup.MarginLayoutParams faceMarginLayoutParams;
+    private void setFaceSize(int width, int height){
+        /* 顔のサイズの変更 */
+        faceLayoutParams = status.getLayoutParams();
+        faceMarginLayoutParams = (ViewGroup.MarginLayoutParams)faceLayoutParams;
+
+        faceMarginLayoutParams.leftMargin  = 0; //画面左端からの長さを指定
+        faceMarginLayoutParams.rightMargin = 0; //画面右端からの長さを指定
+        status.setLayoutParams(faceMarginLayoutParams);
     }
 
     private void updateBom(int width, int height) {
