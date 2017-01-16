@@ -66,6 +66,28 @@ public class MessageSendingFragment extends Fragment {
                     return;
                 }
 
+                //SeekBer
+                SeekBar seekBar = (SeekBar) getActivity().findViewById(R.id.FrustrationBar);
+                int prg = seekBar.getProgress() - 5;
+                if(prg < 0) {
+                    prg = prg * 2;
+                }else{
+                    prg = prg * 3;
+                }
+                String value = String.valueOf(prg);
+
+                /* send http request */
+                String json = "{\"frustrations\": [{\"title\": \"" + title + "\",\"message\": \"" + message + "\",\"value\": \"" + value + "\"}]}";
+                HttpRequest httpRequest = new HttpRequest();
+                httpRequest.post("http://210.140.70.106/api/v1/users/" + UserModel.getId() + "/frustrations.json", json);
+
+                /* clear edit text box */
+                editTextTitle.getEditableText().clear();
+                editTextMessage.getEditableText().clear();
+
+                /* show dialog */
+                new AlertDialog.Builder(getActivity()).setTitle("").setMessage("メモリアル完了しました。").show();
+
                 /* close software keyboard */
                 closeSoftwareKeyboard(view);
 
@@ -86,6 +108,7 @@ public class MessageSendingFragment extends Fragment {
     public void onOkClick() {
 
         //SeekBer
+        /*
         SeekBar seekBar = (SeekBar) getActivity().findViewById(R.id.FrustrationBar);
         int prg = seekBar.getProgress() - 5;
         if(prg < 0) {
@@ -94,24 +117,33 @@ public class MessageSendingFragment extends Fragment {
             prg = prg * 3;
         }
         String value = String.valueOf(prg);
+         */
 
         /* get text from edit text box */
+        /*
         EditText editTextTitle = (EditText) getActivity().findViewById(R.id.edit_text_sending_title);
         EditText editTextMessage = (EditText) getActivity().findViewById(R.id.edit_text_sending_message);
         String title = editTextTitle.getText().toString();
         String message = editTextMessage.getText().toString();
+         */
 
         /* send http request */
+        /*
         String json = "{\"frustrations\": [{\"title\": \"" + title + "\",\"message\": \"" + message + "\",\"value\": \"" + value + "\"}]}";
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.post("http://210.140.70.106/api/v1/users/" + UserModel.getId() + "/frustrations.json", json);
+         */
 
         /* clear edit text box */
+        /*
         editTextTitle.getEditableText().clear();
         editTextMessage.getEditableText().clear();
+         */
 
         /* show dialog */
+        /*
         new AlertDialog.Builder(getActivity()).setTitle("").setMessage("メモリアル完了しました。").show();
+         */
     }
 
     /* close software keyboard */

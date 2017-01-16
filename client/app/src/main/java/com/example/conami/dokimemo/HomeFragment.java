@@ -112,7 +112,10 @@ public class HomeFragment extends Fragment{
                     }
                 });
                 //String url = "http://210.140.69.130/api/v1/users/"+UserModel.getId()+"/frustrations.json";
-                String url = "http://210.140.70.106/api/v1/users/"+UserModel.getId()+"/frustrations.json";
+                /*テスト用*/
+                //String url = "http://210.140.70.106/api/v1/users/"+UserModel.getId()+"/frustrations.json";
+                /*本番用*/
+                String url = "http://210.140.70.106/api/v1/users/"+UserModel.getPartnarId()+"/frustrations.json";
                 httpRequest.get(url);
 
                 //リスナーを削除する
