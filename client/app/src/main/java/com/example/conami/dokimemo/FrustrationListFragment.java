@@ -55,7 +55,7 @@ public class FrustrationListFragment extends Fragment implements SwipeRefreshLay
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         messages = new ArrayList<FrustrationMessage>();
-        updateFrustrationList();
+        //updateFrustrationList();
 
         if (messages.size() == 0) {
             FrustrationMessage frustrationMessage = new FrustrationMessage();
